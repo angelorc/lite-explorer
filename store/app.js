@@ -4,7 +4,11 @@ export const state = () => ({
   total_supply: 0,
   community_pool: 0,
   inflation: 0,
-  chain_id: ''
+  chain_id: '',
+  signatures: {
+    active: 0,
+    total: 0
+  }
 })
 
 export const getters = {
@@ -25,14 +29,24 @@ export const getters = {
   },
   inflation: state => {
     return state.inflation
+  },
+  signatures: state => {
+    return state.signatures
   }
 }
 
 export const mutations = {
   setHeaders: (state, headers) => {
+
     state.connected = true
     state.chain_id = headers.value.block.header.chain_id
     state.last_block = headers.value.block.header.height
+
+    const signatures = headers.value.block.last_commit.signatures
+    const signatureslen = signatures.length
+    const signaturesNull = signatures.filter(s => s.signature === null).length
+    state.signatures.total = signatureslen
+    state.signatures.active = signatureslen - signaturesNull
   },
   setTotalSupply: (state, supply) => {
     state.total_supply = supply

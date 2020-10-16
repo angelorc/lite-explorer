@@ -24,8 +24,12 @@
           <v-list-item>
             <v-list-item-icon> <v-icon>mdi-cube</v-icon> </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-subtitle>ACTIVE VALIDATORS</v-list-item-subtitle>
-              <v-list-item-title>{{ active_validators }}</v-list-item-title>
+              <v-list-item-subtitle>VALIDATORS</v-list-item-subtitle>
+              <v-list-item-title
+                >{{ signatures.active }}/{{
+                  signatures.total
+                }}</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
@@ -193,6 +197,9 @@ export default {
     },
     validators() {
       return this.$store.getters[`validators/validators`]
+    },
+    signatures() {
+      return this.$store.getters[`app/signatures`]
     },
   },
 }
