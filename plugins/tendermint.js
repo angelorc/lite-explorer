@@ -2,7 +2,7 @@ import Tendermint from '@/lib/tendermint'
 import Btsg from '@/lib/btsg'
 
 export default (ctx, inject) => {
-  const tm = new Tendermint('bitsong-testnet-4', 'ws://rpc.testnet4.bitsong.network:26657/websocket')
+  const tm = new Tendermint('bitsong-testnet-4', 'wss://rpc.testnet4.bitsong.network/websocket')
   inject('tm', tm)
   ctx.$tm = tm
 
