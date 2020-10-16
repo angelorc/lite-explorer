@@ -103,7 +103,7 @@
                       class="ml-2"
                     ></v-avatar>
                   </template>
-                  <span v-if="validator.status === 3">Status: Active</span>
+                  <span v-if="validator.status === 2">Status: Active</span>
                   <span v-else>Status: Inactive</span>
                 </v-tooltip>
               </td>
@@ -131,7 +131,7 @@
                       >mdi-alert</v-icon
                     >
                   </template>
-                  <span>Commission is more then 20%</span>
+                  <span>Commission is more than 20%</span>
                 </v-tooltip>
                 <v-tooltip
                   bottom
@@ -146,7 +146,7 @@
                       >mdi-alert-octagram</v-icon
                     >
                   </template>
-                  <span>Commission is more then 50%</span>
+                  <span>Commission is more than 50%</span>
                 </v-tooltip>
                 {{ validator.commission.commission_rates.rate * 100 }}%
               </td>
