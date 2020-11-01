@@ -8,7 +8,8 @@ export const state = () => ({
   signatures: {
     active: 0,
     total: 0
-  }
+  },
+  stakeDenom: 'ubtsg'
 })
 
 export const getters = {
@@ -32,6 +33,9 @@ export const getters = {
   },
   signatures: state => {
     return state.signatures
+  },
+  stakeDenom: state => {
+    return state.stakeDenom
   }
 }
 
@@ -79,5 +83,14 @@ export const actions = {
         commit('setInflation', inflation.result)
       }
     )
+
+    // this.$tm.subscribe(
+    //   {
+    //     query: `tm.event = 'Vote'`,
+    //   },
+    //   async (response) => {
+    //     console.log(response)
+    //   }
+    // )
   }
 }

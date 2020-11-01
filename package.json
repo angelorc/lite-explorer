@@ -15,7 +15,10 @@
     "bignumber.js": "^9.0.1",
     "core-js": "^3.6.5",
     "jdenticon": "^2.2.0",
-    "nuxt": "^2.14.6"
+    "nuxt": "^2.14.6",
+    "date-fns": "^2.0.0-alpha.22",
+    "pretty-num": "^0.3.0",
+    "entity-decode": "^2.0.2"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2",

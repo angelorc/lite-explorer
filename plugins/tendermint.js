@@ -11,5 +11,6 @@ export default (ctx, inject) => {
   ctx.$btsg = btsg
 
   ctx.app.store.dispatch(`app/startListening`)
+  ctx.app.store.dispatch(`consensus/subscribe`)
   ctx.app.store.dispatch(`validators/getAll`)
 }

@@ -1,69 +1,17 @@
 <template>
   <page-template>
-    <v-card flat>
+    <dashboard-overview class="mb-8"></dashboard-overview>
+    <consensus-card class="mb-4"></consensus-card>
+    <v-container class="px-0">
       <v-row>
-        <v-col cols="12" md="4">
-          <v-list-item>
-            <v-list-item-icon> <v-icon>mdi-cube</v-icon> </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle>LATEST BLOCK</v-list-item-subtitle>
-              <v-list-item-title>{{ last_block }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-icon> <v-icon>mdi-cube</v-icon> </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle>TOTAL SUPPLY</v-list-item-subtitle>
-              <v-list-item-title>
-                <Amount :microAmount="total_supply" denom="BTSG" />
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+        <v-col cols="6">
+          <dashboard-latest-blocks></dashboard-latest-blocks>
         </v-col>
-        <v-col cols="12" md="4">
-          <v-list-item>
-            <v-list-item-icon> <v-icon>mdi-cube</v-icon> </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle>VALIDATORS</v-list-item-subtitle>
-              <v-list-item-title
-                >{{ signatures.active }}/{{
-                  signatures.total
-                }}</v-list-item-title
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-icon> <v-icon>mdi-cube</v-icon> </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle>VOTING POWER</v-list-item-subtitle>
-              <v-list-item-title
-                ><Amount :microAmount="total_power" denom="BTSG"
-              /></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-col>
-        <v-col cols="12" md="4">
-          <v-list-item>
-            <v-list-item-icon> <v-icon>mdi-cube</v-icon> </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle>COMMUNITY POOL</v-list-item-subtitle>
-              <v-list-item-title
-                ><Amount :microAmount="community_pool" denom="BTSG"
-              /></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-icon> <v-icon>mdi-cube</v-icon> </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle>INFLATION</v-list-item-subtitle>
-              <v-list-item-title
-                >{{ percentage(inflation) }} %</v-list-item-title
-              >
-            </v-list-item-content>
-          </v-list-item>
+        <v-col cols="6">
+          <dashboard-latest-txs></dashboard-latest-txs>
         </v-col>
       </v-row>
-    </v-card>
+    </v-container>
     <v-card flat class="mt-4">
       <v-card-title>Validators</v-card-title>
       <v-simple-table>
@@ -166,10 +114,19 @@
 import PageTemplate from '@/components/PageTemplate'
 import ValidatorAvatar from '@/components/ValidatorAvatar'
 
+import DashboardOverview from '@/components/DashboardOverview'
+import DashboardLatestBlocks from '@/components/DashboardLatestBlocks'
+import DashboardLatestTxs from '@/components/DashboardLatestTxs'
+import ConsensusCard from '@/components/ConsensusCard'
+
 export default {
   components: {
     PageTemplate,
     ValidatorAvatar,
+    DashboardOverview,
+    DashboardLatestBlocks,
+    DashboardLatestTxs,
+    ConsensusCard,
   },
   methods: {
     percentage(amt) {

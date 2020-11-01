@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="transparent" fixed flat>
+  <v-app-bar app color="red darken-1" fixed dark>
     <v-row class="px-4">
       <v-toolbar-title class="pl-1">
         <router-link
@@ -12,7 +12,7 @@
             alt="BitSong"
             min-width="135"
             width="135"
-            src="/bitsong_logo_red.svg"
+            src="/bitsong_logo.svg"
           />
         </router-link>
       </v-toolbar-title>
