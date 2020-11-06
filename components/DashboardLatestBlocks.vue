@@ -66,7 +66,7 @@ export default {
     }
   },
   async created() {
-    const blocks = await this.$btsg.getLatestBlocks()
+    const blocks = await this.$api.getLatestBlocks()
     this.blocks = blocks.data
   },
 }

@@ -1,0 +1,197 @@
+<template>
+  <v-card class="mb-4">
+    <v-container>
+      <v-row>
+        <v-col cols="1">
+          <validator-avatar :validator="validator" size="100px" />
+        </v-col>
+        <v-col cols="11" align-self="center">
+          <h2 style="display: inline" class="text-h6">
+            {{ validator.description.moniker }}
+          </h2>
+          <v-chip
+            v-if="validator.status === 2"
+            style="margin-top: -5px"
+            class="ml-2 font-weight-medium"
+            color="green"
+            text-color="white"
+            small
+          >
+            Active
+          </v-chip>
+          <v-chip
+            v-if="validator.status !== 2"
+            style="margin-top: -5px"
+            class="ml-2 font-weight-medium"
+            color="red"
+            text-color="white"
+            small
+          >
+            Inactive
+          </v-chip>
+          <v-chip
+            v-if="validator.jailed"
+            style="margin-top: -5px"
+            class="ml-2 font-weight-medium"
+            color="red"
+            text-color="white"
+            small
+          >
+            Jailed
+          </v-chip>
+          <p class="pr-8 mb-2">{{ validator.description.details }}</p>
+          <div>
+            <a
+              v-if="validator.description.website"
+              :href="validator.description.website"
+              target="_blank"
+              class="v-btn v-btn--flat v-btn--icon v-btn--round v-btn--router theme--light v-size--default"
+            >
+              <v-icon left>mdi-web</v-icon>
+            </a>
+            <a
+              v-if="validator.description.security_contact"
+              :href="validator.description.security_contact"
+              target="_blank"
+              class="v-btn v-btn--flat v-btn--icon v-btn--round v-btn--router theme--light v-size--default"
+            >
+              <v-icon>mdi-email</v-icon>
+            </a>
+          </div>
+        </v-col>
+      </v-row>
+      <v-divider></v-divider>
+      <v-card-text>
+        <v-row>
+          <v-col cols="6">
+            <div class="subtitle-1">
+              {{ validator.operator_address }}
+            </div>
+            <div
+              class="grey--text subtitle-2 text--darken-2 font-weight-regular"
+            >
+              Operator Address
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div class="subtitle-1">
+              {{ validator.delegator_address }}
+            </div>
+            <div
+              class="grey--text subtitle-2 text--darken-2 font-weight-regular"
+            >
+              Delegator Address
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div class="subtitle-1">
+              {{ validator.address }}
+            </div>
+            <div
+              class="grey--text subtitle-2 text--darken-2 font-weight-regular"
+            >
+              Address
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div class="subtitle-1">
+              <amount
+                :micro-amount="validator.tokens"
+                :denom="stakeDenom"
+              ></amount>
+            </div>
+            <div
+              class="grey--text subtitle-2 text--darken-2 font-weight-regular"
+            >
+              Tokens
+            </div>
+          </v-col>
+          <v-col cols="12" class="py-0">
+            <v-row>
+              <v-col cols="3">
+                <div class="subtitle-1">
+                  {{
+                    Number(
+                      validator.commission.commission_rates.rate * 100
+                    ).toFixed(2)
+                  }}
+                  %
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon size="20" v-on="on" style="margin-top: -5px"
+                        >mdi-information-outline</v-icon
+                      >
+                    </template>
+                    <span
+                      >Last Update:
+                      {{ new Date(validator.commission.update_time) }}</span
+                    >
+                  </v-tooltip>
+                </div>
+                <div
+                  class="grey--text subtitle-2 text--darken-2 font-weight-regular"
+                >
+                  Commission
+                </div>
+              </v-col>
+              <v-col cols="3">
+                <div class="subtitle-1">
+                  {{
+                    Number(
+                      validator.commission.commission_rates.max_rate * 100
+                    ).toFixed(2)
+                  }}
+                  %
+                </div>
+                <div
+                  class="grey--text subtitle-2 text--darken-2 font-weight-regular"
+                >
+                  Max Commission
+                </div>
+              </v-col>
+              <v-col cols="6">
+                <div class="subtitle-1">
+                  {{
+                    Number(
+                      validator.commission.commission_rates.max_change_rate *
+                        100
+                    ).toFixed(2)
+                  }}
+                  %
+                </div>
+                <div
+                  class="grey--text subtitle-2 text--darken-2 font-weight-regular"
+                >
+                  Max Change
+                </div>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-container>
+  </v-card>
+</template>
+
+<script>
+import ValidatorAvatar from '@/components/ValidatorAvatar'
+import Amount from '@/components/Amount'
+
+export default {
+  components: {
+    ValidatorAvatar,
+    Amount,
+  },
+  props: {
+    validator: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    stakeDenom() {
+      return process.env.STAKEDENOM
+    },
+  },
+}
+</script>

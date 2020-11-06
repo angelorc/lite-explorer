@@ -1,7 +1,7 @@
 <template>
   <span>
     <span :class="{ 'display-1': large }">{{ integer }}</span
-    ><span :class="{ 'subtitle-1': large, caption: !large }"
+    ><span v-if="!noDecimals" :class="{ 'subtitle-1': large, caption: !large }"
       >.{{ decimals }} {{ macroDenom }}</span
     >
   </span>
@@ -21,6 +21,10 @@ export default {
       required: true,
     },
     large: {
+      type: Boolean,
+      default: false,
+    },
+    noDecimals: {
       type: Boolean,
       default: false,
     },

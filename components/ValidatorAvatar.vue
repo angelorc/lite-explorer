@@ -26,7 +26,7 @@ export default {
     }
   },
   created() {
-    if (this.validator.description.identity) {
+    if (this.validator.description && this.validator.description.identity) {
       this.getValidatorProfileUrl(this.validator.description.identity)
     }
   },

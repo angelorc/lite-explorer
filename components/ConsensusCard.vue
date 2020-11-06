@@ -10,7 +10,9 @@
           <v-list-item-subtitle>Height</v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-content class="text-center">
-          <v-list-item-title>{{ proposer }}</v-list-item-title>
+          <v-list-item-title>
+            <proposer :address="proposer"></proposer
+          ></v-list-item-title>
           <v-list-item-subtitle>Proposer</v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-content class="text-center">

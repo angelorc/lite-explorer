@@ -18,24 +18,15 @@
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items>
-        <span class="hain_name">
+        <v-btn text :to="`/blocks`">Blocks</v-btn>
+        <v-btn text :to="`/transactions`">Transactions</v-btn>
+        <v-btn text :to="`/staking`">Staking</v-btn>
+        <v-btn text>Governance</v-btn>
+        <v-btn text>
           <v-icon dark class="pr-3" color="green" size="12">mdi-circle</v-icon>
           <span>{{ $store.getters[`app/chain_id`] }}</span>
-        </span>
+        </v-btn>
       </v-toolbar-items>
     </v-row>
   </v-app-bar>
 </template>
-
-<style scoped>
-.chain_name {
-  display: flex;
-  height: 100% !important;
-  align-items: center;
-  vertical-align: middle;
-  font-weight: 500;
-}
-.chain_name_padding {
-  padding: 0 20px;
-}
-</style>

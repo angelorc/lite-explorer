@@ -23,10 +23,14 @@
             </div>
             <div class="body-2 grey--text text--darken-3">
               From
-              {{ tx.signatures[0].address | hash }}
+              <nuxt-link :to="`/account/${tx.signatures[0].address}`">{{
+                tx.signatures[0].address | hash
+              }}</nuxt-link>
             </div>
             <div class="pt-2">
-              <v-chip outlined small>{{ tx.messages[0].type }}</v-chip>
+              <v-chip outlined small>{{
+                tx.messages[0].type | convertMessageType
+              }}</v-chip>
               <v-chip outlined small v-if="tx.messages.length - 1"
                 >+{{ tx.messages.length - 1 }}</v-chip
               >
@@ -69,7 +73,7 @@ export default {
     }
   },
   async created() {
-    const txs = await this.$btsg.getLatestTxs()
+    const txs = await this.$api.getLatestTxs()
     this.txs = txs.data
   },
 }

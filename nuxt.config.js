@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
@@ -22,9 +23,19 @@ export default {
   css: [
   ],
 
+  env: {
+    STAKEDENOM: process.env.STAKEDENOM,
+    MICROSTAKEDENOM: process.env.MICROSTAKEDENOM,
+    LCD: process.env.LCD,
+    //RPC: process.env.RPC,
+    API: process.env.API,
+    SOCKET: process.env.SOCKET,
+    CHAIN_ID: process.env.CHAIN_ID
+  },
+
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [{
-    src: "~/plugins/tendermint.js",
+    src: "~/plugins/app.js",
     ssr: false
   }],
 
@@ -35,6 +46,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -52,7 +64,12 @@ export default {
   },
 
   proxy: {
-
+    // '/rpc': {
+    //   target: process.env.RPC,
+    //   pathRewrite: {
+    //     '^/rpc': '/'
+    //   }
+    // }
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
@@ -61,6 +78,9 @@ export default {
     theme: {
       dark: false,
       themes: {
+        light: {
+          primary: colors.red.darken1,
+        },
         dark: {
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,

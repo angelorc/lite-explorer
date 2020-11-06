@@ -14,7 +14,7 @@
           <v-list-item-content>
             <v-list-item-subtitle>TOTAL SUPPLY</v-list-item-subtitle>
             <v-list-item-title>
-              <Amount :microAmount="total_supply" denom="BTSG" />
+              <amount :microAmount="total_supply" :denom="stakeDenom" />
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -40,7 +40,7 @@
           <v-list-item-content>
             <v-list-item-subtitle>VOTING POWER</v-list-item-subtitle>
             <v-list-item-title
-              ><Amount :microAmount="total_power" denom="BTSG"
+              ><amount :microAmount="total_power" :denom="stakeDenom"
             /></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -51,7 +51,7 @@
           <v-list-item-content>
             <v-list-item-subtitle>COMMUNITY POOL</v-list-item-subtitle>
             <v-list-item-title
-              ><Amount :microAmount="community_pool" denom="BTSG"
+              ><amount :microAmount="community_pool" :denom="stakeDenom"
             /></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -75,6 +75,9 @@ export default {
     },
   },
   computed: {
+    stakeDenom() {
+      return process.env.STAKEDENOM
+    },
     last_block() {
       return this.$store.getters[`app/last_block`]
     },
