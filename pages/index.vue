@@ -2,7 +2,7 @@
   <page-template>
     <dashboard-overview class="mb-8"></dashboard-overview>
     <consensus-card class="mb-4"></consensus-card>
-    <v-container class="px-0">
+    <v-container class="px-0" fluid>
       <v-row>
         <v-col cols="6">
           <dashboard-latest-blocks></dashboard-latest-blocks>

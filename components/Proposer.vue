@@ -3,7 +3,8 @@
     <nuxt-link v-if="account.link !== $route.path" :to="account.link">{{
       account.name
     }}</nuxt-link>
-    <span v-else>me</span>
+    <span v-else-if="account.link === $route.path">me</span>
+    <span v-else>-</span>
   </span>
 </template>
 

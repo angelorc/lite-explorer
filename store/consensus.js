@@ -1,4 +1,5 @@
 export const state = () => ({
+  subscriptions: [],
   height: 0,
   proposer: '-',
   round: 0,
@@ -21,6 +22,9 @@ export const getters = {
   },
   signatures: state => {
     return state.signatures
+  },
+  subscriptions: state => {
+    return state.subscriptions
   }
 }
 
@@ -36,13 +40,24 @@ export const mutations = {
   },
   incrementSignatures: (state) => {
     state.signatures++
+  },
+  addSubscription: (state, payload) => {
+    state.subscriptions.push(payload)
+  },
+  resetState: (state) => {
+    state.subscriptions = []
+    state.height = 0
+    state.proposer = '-'
+    state.round = 0
+    state.step = '-'
+    state.signatures = 0
   }
 }
 
 
 export const actions = {
-  subscribe({ commit }) {
-    this.$tm.subscribe(
+  async subscribe({ commit }) {
+    const round_id = await this.$tm.subscribe(
       {
         query: `tm.event = 'NewRound'`,
       },
@@ -52,7 +67,9 @@ export const actions = {
       }
     )
 
-    this.$tm.subscribe(
+    commit('addSubscription', round_id)
+
+    const vote_id = await this.$tm.subscribe(
       {
         query: `tm.event = 'Vote'`,
       },
@@ -62,5 +79,14 @@ export const actions = {
         }
       }
     )
+
+    commit('addSubscription', vote_id)
+  },
+  async unsubscribe({ commit, getters }) {
+    for (let i = 0; i < getters.subscriptions.length; i++) {
+      this.$tm.unsubscribe(getters.subscriptions[i])
+    }
+
+    commit('resetState')
   }
 }
