@@ -1,7 +1,7 @@
 <template>
   <page-template>
     <h1 class="text-h4 mb-4">
-      Transaction<br /><span class="subtitle-1">{{ hash }}</span>
+      Transaction
     </h1>
     <v-card class="mb-8">
       <v-container>

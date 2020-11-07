@@ -25,7 +25,7 @@
         </v-list-item-content>
         <v-list-item-content class="text-center">
           <v-list-item-title>{{ signatures }}</v-list-item-title>
-          <v-list-item-subtitle>Signatures</v-list-item-subtitle>
+          <v-list-item-subtitle>Precommit</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>

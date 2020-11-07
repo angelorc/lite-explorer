@@ -44,7 +44,7 @@
                 text-overflow: ellipsis;
               "
             >
-              {{ block.proposer_address }}
+              <proposer :address="block.proposer_address"></proposer>
             </div>
           </v-col>
         </v-row>

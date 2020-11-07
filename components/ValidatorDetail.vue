@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="1">
-          <validator-avatar :validator="validator" size="100px" />
+          <validator-avatar :validator="validator" size="80px" />
         </v-col>
         <v-col cols="11" align-self="center">
           <h2 style="display: inline" class="text-h6">
@@ -75,7 +75,9 @@
           </v-col>
           <v-col cols="6">
             <div class="subtitle-1">
+              <nuxt-link :to="`/account/${validator.delegator_address}`">
               {{ validator.delegator_address }}
+              </nuxt-link>
             </div>
             <div
               class="grey--text subtitle-2 text--darken-2 font-weight-regular"

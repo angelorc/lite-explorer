@@ -22,7 +22,6 @@
       >
     </h2>
     <transactions-data-table
-      v-if="txs.count"
       class="mb-8"
       :transactions="txs"
       default_pagination

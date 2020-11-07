@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card :loading="loading">
     <v-toolbar flat>
       <v-toolbar-title>Delegations</v-toolbar-title>
       <div class="flex-grow-1"></div>
@@ -35,6 +35,10 @@ export default {
       type: Array,
       required: true,
     },
+    loading: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     Amount,
