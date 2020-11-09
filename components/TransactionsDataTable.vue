@@ -152,7 +152,7 @@ export default {
     Proposer,
   },
   filters: {
-    hash: (value) => shortFilter(value, 8),
+    hash: (value) => shortFilter(value, 5),
     timeDistance: (value) => getTimeDistance(value),
     convertMessageType: (value) => {
       return value

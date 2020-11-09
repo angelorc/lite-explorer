@@ -31,7 +31,8 @@ export default {
   },
   computed: {
     macroDenom() {
-      return this.denom.replace('u', '').toUpperCase()
+      const startWithU = this.denom.charAt(0).toUpperCase() === 'U'
+      return startWithU ? this.denom.replace('u', '').toUpperCase() : this.denom.toUpperCase()
     },
     number() {
       return new BigNumber(this.microAmount).div(10 ** dec).toFixed(dec)
