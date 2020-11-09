@@ -55,7 +55,7 @@
         >
       </template>
       <template v-slot:item.status="{ item }">
-        <v-tooltip bottom v-if="item.logs.length">
+        <v-tooltip bottom v-if="item.logs">
           <template v-slot:activator="{ on }">
             <v-icon color="green" v-on="on">mdi-check-bold</v-icon>
           </template>
