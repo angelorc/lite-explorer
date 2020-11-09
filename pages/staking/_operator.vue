@@ -17,28 +17,31 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="12" md="6">
           <validator-proposed-blocks
             :loading="loadings.proposed_blocks"
             :blocks="proposed_blocks"
           ></validator-proposed-blocks>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="12" md="6">
           <validator-missed-blocks
-          :loading="loadings.missed_blocks"
+            :loading="loadings.missed_blocks"
             :blocks="missed_blocks"
           ></validator-missed-blocks>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="12" md="6">
           <validator-delegations
             :loading="loadings.delegations"
             :delegations="delegations"
           ></validator-delegations>
         </v-col>
-        <v-col cols="6">
-          <validator-unbondings :loading="loadings.unbondings" :unbondings="unbondings"></validator-unbondings>
+        <v-col cols="12" md="6">
+          <validator-unbondings
+            :loading="loadings.unbondings"
+            :unbondings="unbondings"
+          ></validator-unbondings>
         </v-col>
       </v-row>
     </v-container>
@@ -55,7 +58,7 @@ export default {
         ...validator.result,
         delegator_address: validator.delegator_address,
         address: validator.address,
-      }
+      },
     }
   },
   data() {
@@ -68,8 +71,8 @@ export default {
         delegations: false,
         proposed_blocks: false,
         missed_blocks: false,
-        unbondings: false
-      }
+        unbondings: false,
+      },
     }
   },
   async mounted() {
@@ -82,7 +85,9 @@ export default {
     async getDelegations() {
       this.loadings.delegations = !this.loadings.delegations
 
-      const delegations = await this.$btsg.getValidatorDelegations(this.validator.operator_address)
+      const delegations = await this.$btsg.getValidatorDelegations(
+        this.validator.operator_address
+      )
       this.delegations = delegations.result
 
       this.loadings.delegations = !this.loadings.delegations
@@ -90,7 +95,9 @@ export default {
     async getProposedBlocks() {
       this.loadings.proposed_blocks = !this.loadings.proposed_blocks
 
-      const proposed_blocks = await this.$api.getProposedBlocks(this.validator.operator_address)
+      const proposed_blocks = await this.$api.getProposedBlocks(
+        this.validator.operator_address
+      )
       this.proposed_blocks = proposed_blocks.data
 
       this.loadings.proposed_blocks = !this.loadings.proposed_blocks
@@ -98,7 +105,9 @@ export default {
     async getMissedBlocks() {
       this.loadings.missed_blocks = !this.loadings.missed_blocks
 
-      const missed_blocks = await this.$api.getMissedBlocks(this.validator.operator_address)
+      const missed_blocks = await this.$api.getMissedBlocks(
+        this.validator.operator_address
+      )
       this.missed_blocks = missed_blocks.data
 
       this.loadings.missed_blocks = !this.loadings.missed_blocks
@@ -106,21 +115,23 @@ export default {
     async getUnbondings() {
       this.loadings.unbondings = !this.loadings.unbondings
 
-      const unbondings = await this.$btsg.getValidatorUnbondings(this.validator.operator_address)
+      const unbondings = await this.$btsg.getValidatorUnbondings(
+        this.validator.operator_address
+      )
       this.unbondings = unbondings
 
       this.loadings.unbondings = !this.loadings.unbondings
-    }
+    },
   },
   computed: {
     lastBlock() {
       return this.$store.getters[`app/last_block`]
-    }
+    },
   },
   watch: {
     lastBlock() {
       this.getMissedBlocks()
-    }
-  }
+    },
+  },
 }
 </script>

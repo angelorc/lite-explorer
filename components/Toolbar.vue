@@ -17,7 +17,7 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-items>
+      <v-toolbar-items v-if="$vuetify.breakpoint.mdAndUp">
         <v-btn text :to="`/blocks`">Blocks</v-btn>
         <v-btn text :to="`/transactions`">Transactions</v-btn>
         <v-btn text :to="`/staking`">Staking</v-btn>

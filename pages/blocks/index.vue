@@ -34,9 +34,19 @@
           }}</nuxt-link>
         </template>
         <template v-slot:item.hash="{ item }">{{ item.hash | hash }}</template>
+
         <template v-slot:item.proposer_address="{ item }">
           <proposer :address="item.proposer_address" />
         </template>
+
+        <template v-slot:item.total_txs="{ item }">{{
+          item.total_txs
+        }}</template>
+
+        <template v-slot:item.total_fees="{ item }">
+          <amount :microAmount="item.total_fees" :denom="stakeDenom"></amount>
+        </template>
+
         <template v-slot:item.time="{ item }">{{
           item.time | timeDistance
         }}</template>
@@ -67,6 +77,7 @@
 <script>
 import PageTemplate from '@/components/PageTemplate'
 import Proposer from '@/components/Proposer'
+import Amount from '@/components/Amount'
 
 import { shortFilter, getTimeDistance } from '@/lib/utils'
 
@@ -74,6 +85,7 @@ export default {
   components: {
     PageTemplate,
     Proposer,
+    Amount,
   },
   filters: {
     hash: (value) => shortFilter(value, 12),
@@ -95,11 +107,18 @@ export default {
     return {
       blocks_header: [
         { text: 'Block', value: 'height', sortable: false },
-        { text: 'Timestamp', value: 'timestamp', sortable: false },
-        { text: 'Proposer', value: 'proposer_address', sortable: false },
         { text: 'Hash', value: 'hash', sortable: false },
+        { text: 'Proposer', value: 'proposer_address', sortable: false },
+        { text: 'Txs', value: 'total_txs', sortable: false },
+        { text: 'Fees', value: 'total_fees', sortable: false },
+        { text: 'Timestamp', value: 'timestamp', sortable: false },
       ],
     }
+  },
+  computed: {
+    stakeDenom() {
+      return process.env.STAKEDENOM
+    },
   },
 }
 </script>

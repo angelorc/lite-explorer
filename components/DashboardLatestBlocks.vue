@@ -22,19 +22,18 @@
               }}</nuxt-link>
             </div>
             <div class="body-2 grey--text text--darken-3">
-              Includes [TODO] txs
-              <span class="hidden-sm-and-down"
-                >, Fees [TODO] {{ $store.getters[`app/stakeDenom`] }}</span
-              >
-            </div>
-            <div class="hidden-sm-and-up body-2 grey--text text--darken-3">
-              Fees [TODO] {{ $store.getters[`app/stakeDenom`] }}
+              {{ block.total_txs }} txs
+              <span
+                >-
+                <amount
+                  :micro-amount="block.total_fees"
+                  :denom="$store.getters[`app/stakeDenom`]"
+                ></amount>
+                <span class="caption">Fees</span>
+              </span>
             </div>
           </v-col>
-          <v-col
-            align="right"
-            class="align-self-center body-2 grey--text text--darken-3"
-          >
+          <v-col align="right" class="body-2 grey--text text--darken-3">
             <div>{{ block.timestamp | timeDistance }}</div>
             <div
               style="
@@ -50,6 +49,11 @@
         </v-row>
       </template>
     </v-container>
+    <v-card-actions class="my-4">
+      <v-btn to="/blocks" block color="primary lighten-1"
+        >View all blocks</v-btn
+      >
+    </v-card-actions>
   </v-card>
 </template>
 

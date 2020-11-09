@@ -12,39 +12,46 @@
       <template v-for="(tx, index) in txs">
         <v-divider v-if="index !== 0" :key="`${index}-divider`"></v-divider>
         <v-row :key="`${index}-${tx.height}`">
-          <v-col>
+          <v-col cols="12" class="pb-0">
             <div
               class="subtitle-1 font-weight-medium grey--text text--darken-3"
             >
-              TX#
+              TX
               <nuxt-link class="body-2" :to="`/transactions/${tx.tx_hash}`">{{
                 tx.tx_hash | hash
               }}</nuxt-link>
             </div>
-            <div class="body-2 grey--text text--darken-3">
-              From
-              <nuxt-link :to="`/account/${tx.signatures[0].address}`">{{
-                tx.signatures[0].address | hash
-              }}</nuxt-link>
-            </div>
-            <div class="pt-2">
-              <v-chip outlined small>{{
-                tx.messages[0].type | convertMessageType
-              }}</v-chip>
-              <v-chip outlined small v-if="tx.messages.length - 1"
-                >+{{ tx.messages.length - 1 }}</v-chip
-              >
-            </div>
+          </v-col>
+          <v-col cols="9" class="pb-0 body-2 grey--text text--darken-3">
+            From
+            <nuxt-link :to="`/account/${tx.signatures[0].address}`">{{
+              tx.signatures[0].address | hash
+            }}</nuxt-link>
           </v-col>
           <v-col
             align="right"
-            class="body-2 grey--text text--darken-3 align-self-center"
+            cols="3"
+            class="body-2 grey--text text--darken-3 pb-0"
           >
             {{ tx.timestamp | timeDistance }}</v-col
           >
+
+          <v-col class="body-2 grey--text text--darken-3" cols="12">
+            <v-chip outlined small>{{
+              tx.messages[0].type | convertMessageType
+            }}</v-chip>
+            <v-chip outlined small v-if="tx.messages.length - 1"
+              >+{{ tx.messages.length - 1 }}</v-chip
+            >
+          </v-col>
         </v-row>
       </template>
     </v-container>
+    <v-card-actions class="my-4">
+      <v-btn to="/transactions" block color="primary lighten-1"
+        >View all transactions</v-btn
+      >
+    </v-card-actions>
   </v-card>
 </template>
 

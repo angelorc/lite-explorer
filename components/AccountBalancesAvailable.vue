@@ -1,7 +1,7 @@
 <template>
   <v-card>
-    <v-list v-for="(coin, i) in balances" :key="i">
-      <v-list-item>
+    <v-list>
+      <v-list-item v-for="(coin, i) in balances" :key="i">
         <v-list-item-avatar>
           <v-icon
             v-if="

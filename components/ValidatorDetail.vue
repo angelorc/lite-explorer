@@ -2,10 +2,14 @@
   <v-card class="mb-4">
     <v-container>
       <v-row>
-        <v-col cols="1">
+        <v-col
+          md="1"
+          cols="12"
+          :class="{ 'text-center': $vuetify.breakpoint.smAndDown }"
+        >
           <validator-avatar :validator="validator" size="80px" />
         </v-col>
-        <v-col cols="11" align-self="center">
+        <v-col cols="12" md="11" align-self="center">
           <h2 style="display: inline" class="text-h6">
             {{ validator.description.moniker }}
           </h2>
@@ -63,7 +67,7 @@
       <v-divider></v-divider>
       <v-card-text>
         <v-row>
-          <v-col cols="6">
+          <v-col md="6" cols="12">
             <div class="subtitle-1">
               {{ validator.operator_address }}
             </div>
@@ -73,10 +77,10 @@
               Operator Address
             </div>
           </v-col>
-          <v-col cols="6">
+          <v-col md="6" cols="12">
             <div class="subtitle-1">
               <nuxt-link :to="`/account/${validator.delegator_address}`">
-              {{ validator.delegator_address }}
+                {{ validator.delegator_address }}
               </nuxt-link>
             </div>
             <div
@@ -85,7 +89,7 @@
               Delegator Address
             </div>
           </v-col>
-          <v-col cols="6">
+          <v-col md="6" cols="12">
             <div class="subtitle-1">
               {{ validator.address }}
             </div>
@@ -95,7 +99,7 @@
               Address
             </div>
           </v-col>
-          <v-col cols="6">
+          <v-col md="6" cols="12">
             <div class="subtitle-1">
               <amount
                 :micro-amount="validator.tokens"
@@ -110,7 +114,7 @@
           </v-col>
           <v-col cols="12" class="py-0">
             <v-row>
-              <v-col cols="3">
+              <v-col md="3" cols="6">
                 <div class="subtitle-1">
                   {{
                     Number(
@@ -136,7 +140,7 @@
                   Commission
                 </div>
               </v-col>
-              <v-col cols="3">
+              <v-col md="3" cols="6">
                 <div class="subtitle-1">
                   {{
                     Number(
@@ -151,7 +155,7 @@
                   Max Commission
                 </div>
               </v-col>
-              <v-col cols="6">
+              <v-col md="6" cols="12">
                 <div class="subtitle-1">
                   {{
                     Number(

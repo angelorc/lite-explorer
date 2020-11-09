@@ -4,10 +4,10 @@
     <consensus-card class="mb-4"></consensus-card>
     <v-container class="px-0" fluid>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="12" md="6">
           <dashboard-latest-blocks></dashboard-latest-blocks>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="12" md="6">
           <dashboard-latest-txs></dashboard-latest-txs>
         </v-col>
       </v-row>

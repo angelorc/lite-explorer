@@ -1,42 +1,46 @@
 <template>
   <v-card tile elevation="1" :loading="active && height == 0">
     <v-toolbar flat>
-      <v-toolbar-title class="title">
-        Consensus State
-      </v-toolbar-title>
+      <v-toolbar-title class="title"> Consensus State </v-toolbar-title>
       <div class="flex-grow-1"></div>
       <v-switch class="mt-6" v-model="active"></v-switch>
     </v-toolbar>
-    <v-list v-if="active">
-      <v-list-item two-line>
-        <v-list-item-content class="text-center">
-          <v-list-item-title>{{ height }}</v-list-item-title>
-          <v-list-item-subtitle>Height</v-list-item-subtitle>
-        </v-list-item-content>
-        <v-list-item-content class="text-center">
+    <v-container v-if="active">
+      <v-row>
+        <v-col cols="12" md="3" class="text-center">
           <v-list-item-title>
             <proposer :address="proposer"></proposer
           ></v-list-item-title>
-          <v-list-item-subtitle>Proposer</v-list-item-subtitle>
-        </v-list-item-content>
-        <v-list-item-content class="text-center">
+          <v-list-item-subtitle class="grey--text text--darken-2"
+            >Proposer</v-list-item-subtitle
+          >
+        </v-col>
+        <v-col cols="4" md="3" class="text-center">
+          <v-list-item-title>{{ height }}</v-list-item-title>
+          <v-list-item-subtitle class="grey--text text--darken-2"
+            >Height</v-list-item-subtitle
+          >
+        </v-col>
+        <v-col cols="4" md="3" class="text-center">
           <v-list-item-title>{{ round }}</v-list-item-title>
-          <v-list-item-subtitle>Round</v-list-item-subtitle>
-        </v-list-item-content>
-        <v-list-item-content class="text-center">
+          <v-list-item-subtitle class="grey--text text--darken-2"
+            >Round</v-list-item-subtitle
+          >
+        </v-col>
+        <v-col cols="4" md="3" class="text-center">
           <v-list-item-title>{{ signatures }}</v-list-item-title>
-          <v-list-item-subtitle>Precommit</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
+          <v-list-item-subtitle class="grey--text text--darken-2"
+            >Precommit</v-list-item-subtitle
+          >
+        </v-col>
+        <v-col cols="12" class="text-center px-4">
           <v-progress-linear
             v-model="percentage"
             color="red darken-1"
           ></v-progress-linear>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-card>
 </template>
 
@@ -44,7 +48,7 @@
 export default {
   data() {
     return {
-      active: false
+      active: false,
     }
   },
   beforeDestroy() {
@@ -57,7 +61,7 @@ export default {
       } else {
         this.$store.dispatch(`consensus/unsubscribe`)
       }
-    }
+    },
   },
   computed: {
     height() {

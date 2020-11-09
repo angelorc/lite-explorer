@@ -59,7 +59,7 @@
       :height="Number(height)"
     ></transactions-data-table>
 
-    <v-expansion-panels v-if="block.missed_validators.length" class="mb-8">
+    <v-expansion-panels class="mb-8">
       <v-expansion-panel>
         <v-expansion-panel-header class="text-h6">
           Missed Validators ({{ block.missed_validators.length }})
@@ -80,8 +80,6 @@
           </v-list>
         </v-expansion-panel-content>
       </v-expansion-panel>
-    </v-expansion-panels>
-    <v-expansion-panels v-if="block.missed_validators.length">
       <v-expansion-panel>
         <v-expansion-panel-header class="text-h6">
           Signatures ({{ block.signatures.length }})
