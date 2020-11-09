@@ -1,6 +1,6 @@
 <template>
   <v-footer dark padless>
-    <v-container>
+    <v-container fluid>
       <v-row align-content="center" justify="center">
         <v-col cols="12" align-self="center" class="text-center">
           <v-img
@@ -19,8 +19,8 @@
         </v-col>
       </v-row>
       <v-divider></v-divider>
-      <v-row class="pb-8 mb-4">
-        <v-col cols="12" md="6" class="pb-0">
+      <v-row class="pb-8 mb-4" justify="center">
+        <v-col cols="12" md="3" class="pb-0">
           <p
             class="caption"
             :class="{
@@ -32,7 +32,7 @@
         </v-col>
         <v-col
           cols="12"
-          md="6"
+          md="3"
           :class="{
             'text-right': $vuetify.breakpoint.mdAndUp,
             'text-center pt-0': $vuetify.breakpoint.smAndDown,

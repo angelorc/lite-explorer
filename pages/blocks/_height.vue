@@ -6,8 +6,8 @@
     <v-card class="mb-8">
       <v-container>
         <v-row>
-          <v-col cols="2" class="grey--text text--darken-2">Block Height</v-col>
-          <v-col cols="10">
+          <v-col cols="12" md="2" :class="{'py-0': $vuetify.breakpoint.smAndDown }" class="grey--text text--darken-2">Block Height</v-col>
+          <v-col cols="12" md="10" :class="{'pt-0': $vuetify.breakpoint.smAndDown }">
             <v-btn
               icon
               small
@@ -29,8 +29,8 @@
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="2" class="grey--text text--darken-2">Timestamp</v-col>
-          <v-col cols="10">
+          <v-col cols="12" md="2" :class="{'py-0': $vuetify.breakpoint.smAndDown }" class="grey--text text--darken-2">Timestamp</v-col>
+          <v-col cols="12" md="10" :class="{'pt-0': $vuetify.breakpoint.smAndDown }">
             <v-icon left size="18" color="grey darken-3">
               mdi-clock-outline
             </v-icon>
@@ -39,13 +39,25 @@
               new Date(block.block.header.time).toUTCString()
             }}</span>
           </v-col>
-          <v-col cols="2" class="grey--text text--darken-2">Validated by</v-col>
-          <v-col cols="10">
+          <v-col cols="12" md="2" :class="{'py-0': $vuetify.breakpoint.smAndDown }" class="grey--text text--darken-2">Validated by</v-col>
+          <v-col cols="12" md="10" :class="{'pt-0': $vuetify.breakpoint.smAndDown }">
             <proposer :address="block.block.header.proposer_address"></proposer>
           </v-col>
-          <v-col cols="2" class="grey--text text--darken-2">Block Hash</v-col>
-          <v-col cols="10">
+          <v-col cols="12" md="2" :class="{'py-0': $vuetify.breakpoint.smAndDown }" class="grey--text text--darken-2">Block Hash</v-col>
+          <v-col cols="12" md="10" :class="{'pt-0': $vuetify.breakpoint.smAndDown }">
             {{ block.block_id.hash }}
+          </v-col>
+          <v-col cols="12" md="2" :class="{'py-0': $vuetify.breakpoint.smAndDown }" class="grey--text text--darken-2">Total Txs</v-col>
+          <v-col cols="12" md="10" :class="{'pt-0': $vuetify.breakpoint.smAndDown }">
+            {{ block.total_txs }}
+          </v-col>
+          <v-col cols="12" md="2" :class="{'py-0': $vuetify.breakpoint.smAndDown }" class="grey--text text--darken-2">Total Gas</v-col>
+          <v-col cols="12" md="10" :class="{'pt-0': $vuetify.breakpoint.smAndDown }">
+            {{ block.total_gas }}
+          </v-col>
+          <v-col cols="12" md="2" :class="{'py-0': $vuetify.breakpoint.smAndDown }" class="grey--text text--darken-2">Total Fees</v-col>
+          <v-col cols="12" md="10" :class="{'pt-0': $vuetify.breakpoint.smAndDown }">
+            <amount :micro-amount="block.total_fees" :denom="$store.getters[`app/stakeDenom`]" />
           </v-col>
         </v-row>
       </v-container>

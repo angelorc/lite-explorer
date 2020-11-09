@@ -1,5 +1,5 @@
 <template>
-  <v-card tile elevation="1">
+  <v-card tile elevation="1":loading="loading">
     <v-card-title>
       <v-icon large left>mdi-bank-transfer</v-icon>
       <h3 class="title">Transactions</h3>
@@ -7,7 +7,7 @@
     <v-divider></v-divider>
     <v-container
       class="py-0"
-      style="overflow-y: auto; display: block; max-height: 550px"
+      style="overflow-y: auto; display: block; height: 550px; max-height: 550px"
     >
       <template v-for="(tx, index) in txs">
         <v-divider v-if="index !== 0" :key="`${index}-divider`"></v-divider>
@@ -31,9 +31,26 @@
           <v-col
             align="right"
             cols="3"
-            class="body-2 grey--text text--darken-3 pb-0"
+            class="body-2 grey--text text--darken-3 py-0"
           >
-            {{ tx.timestamp | timeDistance }}</v-col
+            {{ tx.timestamp | timeDistance }}
+
+            <div>
+              <v-tooltip bottom v-if="tx.logs">
+                <template v-slot:activator="{ on }">
+                  <v-icon color="green" v-on="on">mdi-check-bold</v-icon>
+                </template>
+                <span>Success</span>
+              </v-tooltip>
+              <v-tooltip bottom v-else>
+                <template v-slot:activator="{ on }">
+                  <v-icon color="red" v-on="on">mdi-alert-circle</v-icon>
+                </template>
+                <span>Fail</span>
+              </v-tooltip>
+            </div>
+
+            </v-col
           >
 
           <v-col class="body-2 grey--text text--darken-3" cols="12">
@@ -61,6 +78,7 @@ import {
   prettyRound,
   shortFilter,
   getTimeDistance,
+  sleep
 } from '@/lib/utils'
 
 export default {
@@ -77,11 +95,30 @@ export default {
   data() {
     return {
       txs: [],
+      loading: true,
     }
   },
-  async created() {
-    const txs = await this.$api.getLatestTxs()
-    this.txs = txs.data
+  created() {
+    this.getLatestTxs()
   },
+  methods: {
+    async getLatestTxs() {
+      this.loading = true
+      const txs = await this.$api.getLatestTxs()
+      this.txs = txs.data
+      this.loading = false
+    }
+  },
+  computed: {
+    lastHeight() {
+      return this.$store.getters[`app/last_block`]
+    }
+  },
+  watch: {
+    async lastHeight() {
+      await sleep(2000)
+      this.getLatestTxs()
+    }
+  }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-card tile elevation="1">
+  <v-card tile elevation="1" :loading="loading">
     <v-card-title>
       <v-icon large left>mdi-cube-send</v-icon>
       <h3 class="title">Blocks</h3>
@@ -7,7 +7,7 @@
     <v-divider></v-divider>
     <v-container
       class="py-0"
-      style="overflow-y: auto; display: block; max-height: 550px"
+      style="overflow-y: auto; display: block; height:550px; max-height: 550px"
     >
       <template v-for="(block, index) in blocks">
         <v-divider v-if="index !== 0" :key="`${index}-divider`"></v-divider>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { prettyUsd, getTimeDistance } from '@/lib/utils'
+import { sleep, prettyUsd, getTimeDistance } from '@/lib/utils'
 
 export default {
   filters: {
@@ -67,11 +67,30 @@ export default {
   data() {
     return {
       blocks: [],
+      loading: true
     }
   },
-  async created() {
-    const blocks = await this.$api.getLatestBlocks()
-    this.blocks = blocks.data
+  created() {
+    this.getLatestBlocks()
   },
+  methods: {
+    async getLatestBlocks() {
+      this.loading = true
+      const blocks = await this.$api.getLatestBlocks()
+      this.blocks = blocks.data
+      this.loading = false
+    }
+  },
+  computed: {
+    lastHeight() {
+      return this.$store.getters[`app/last_block`]
+    }
+  },
+  watch: {
+    async lastHeight() {
+      await sleep(2000)
+      this.getLatestBlocks()
+    }
+  }
 }
 </script>
