@@ -30,12 +30,16 @@ export default {
     //RPC: process.env.RPC,
     API: process.env.API,
     SOCKET: process.env.SOCKET,
-    CHAIN_ID: process.env.CHAIN_ID
+    CHAIN_ID: process.env.CHAIN_ID,
+    GA_ID: process.env.GA_ID
   },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [{
     src: "~/plugins/app.js",
+    ssr: false
+  }, {
+    src: "~/plugins/seo-gtag.js",
     ssr: false
   }],
 
