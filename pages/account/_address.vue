@@ -93,7 +93,7 @@ export default {
     }
 
     const delegations = await app.$btsg.getDelegations(params.address)
-    const txs = await app.$api.getTransactions(params.address, 0, 10)
+    const txs = await app.$api.getTransactions(params.address, null, 0, 10)
     const unbondings = await app.$btsg.getUnbondingDelegations(params.address)
     const rewards = await app.$btsg.getDelegatorRewards(params.address)
     const commission = await app.$api.getValidatorDelegatorReward(

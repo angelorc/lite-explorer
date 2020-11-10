@@ -27,7 +27,7 @@ export default {
     let offset = page * limit - limit
     let account = query.account ? query.account : null
 
-    const txs = await app.$api.getTransactions(account, offset, limit)
+    const txs = await app.$api.getTransactions(account, null, offset, limit)
 
     return {
       txs

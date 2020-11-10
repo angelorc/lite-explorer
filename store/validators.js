@@ -8,18 +8,22 @@ export const state = () => ({
 
 export const getters = {
   validators: (state, getters) => {
-    let rank = 1
+    try {
+      let rank = 1
 
-    return [...state.validators].sort((a, b) => {
-      return b.tokens - a.tokens
-    }).map(val => {
-      return {
-        ...val,
-        rank: rank++,
-        voting_power_percent: (Number(getters.total_power) > 0 ? calculateVotingPower(Number(val.tokens), Number(getters.total_power)) : 0),
-        address: pubkeyToAddress(val.consensus_pubkey)
-      }
-    })
+      return [...state.validators].sort((a, b) => {
+        return b.tokens - a.tokens
+      }).map(val => {
+        return {
+          ...val,
+          rank: rank++,
+          voting_power_percent: (Number(getters.total_power) > 0 ? calculateVotingPower(Number(val.tokens), Number(getters.total_power)) : 0),
+          address: pubkeyToAddress(val.consensus_pubkey)
+        }
+      })
+    } catch (e) {
+      console.error(e)
+    }
   },
   total_active: state => {
     return state.validators.filter(v => v.status === 2).length
@@ -44,8 +48,16 @@ export const mutations = {
 
 export const actions = {
   async getAll({ commit }) {
-    const vals = await this.$btsg.getValidators()
+    const bonded = await this.$btsg.getValidators()
+    const unbonded = await this.$btsg.getValidators('unbonded')
+    const unbonding = await this.$btsg.getValidators('unbonding')
 
-    commit('setValidators', vals.result)
+    const validators = [
+      ...bonded.result,
+      ...unbonded.result,
+      ...unbonding.result
+    ]
+
+    commit('setValidators', validators)
   }
 }

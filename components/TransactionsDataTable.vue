@@ -39,9 +39,13 @@
     <v-divider></v-divider>
 
     <transactions-table :items="transactions.docs"></transactions-table>
-
-    <v-divider></v-divider>
-    <v-container class="py-0" v-if="!address">
+    <v-divider
+      v-if="address === null && transactions.totalPages > 1"
+    ></v-divider>
+    <v-container
+      class="py-0"
+      v-if="address === null && transactions.totalPages > 1"
+    >
       <v-row>
         <v-col cols="12" class="text-center">
           <pagination

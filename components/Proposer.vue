@@ -12,16 +12,16 @@ export default {
   props: {
     address: {
       type: String,
-      default: '',
+      default: ''
     },
     valoper: {
       type: String,
-      default: '',
+      default: ''
     },
     deladdr: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   computed: {
     isMobile() {
@@ -36,7 +36,7 @@ export default {
     account() {
       let account = {
         name: '',
-        link: '/',
+        link: '/'
       }
 
       if (this.address) {
@@ -58,18 +58,19 @@ export default {
       let validator
 
       if (this.address) {
-        validator = this.validators.find((v) => v.address === this.address)
+        validator = this.validators.find(v => v.address === this.address)
+        console.log(this.address, validator)
         if (validator) {
           account.name = validator.description.moniker
           account.link = `/staking/${validator.operator_address}`
         }
       } else if (this.valoper) {
         validator = this.validators.find(
-          (v) => v.operator_address === this.valoper
+          v => v.operator_address === this.valoper
         )
       } else {
         validator = this.validators.find(
-          (v) => v.delegator_address === this.deladdr
+          v => v.delegator_address === this.deladdr
         )
       }
 
@@ -78,7 +79,7 @@ export default {
       account.link = `/staking/${validator.operator_address}`
       account.address = this.address
       return account
-    },
-  },
+    }
+  }
 }
 </script>
