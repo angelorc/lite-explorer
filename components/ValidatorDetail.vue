@@ -55,7 +55,7 @@
             </a>
             <a
               v-if="validator.description.security_contact"
-              :href="mailto:validator.description.security_contact"
+              :href="`mailto:${validator.description.security_contact}`"
               target="_blank"
               class="v-btn v-btn--flat v-btn--icon v-btn--round v-btn--router theme--light v-size--default"
             >
