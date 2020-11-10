@@ -114,7 +114,7 @@ export default {
   },
   watch: {
     async lastHeight() {
-      await sleep(2000)
+      await sleep(800)
       this.getLatestTxs()
     }
   }
