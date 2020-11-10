@@ -1,16 +1,56 @@
 <template>
   <v-card>
     <template v-for="(msg, i) in msgs">
-      <v-card-title>{{ msg.type | convertMessageType }}</v-card-title>
+      <v-card-title :key="i">{{ msg.type | convertMessageType }}</v-card-title>
       <template v-for="([key, value], i) in Object.entries(msg.value)">
-        <v-container class="py-0">
+        <v-container class="py-0" :key="i">
           <v-row>
-            <v-col cols="12" md="2" :class="{'py-0': $vuetify.breakpoint.smAndDown }" class="grey--text text--darken-2">
+            <v-col
+              cols="12"
+              md="2"
+              :class="{ 'py-0': $vuetify.breakpoint.smAndDown }"
+              class="grey--text text--darken-2"
+            >
               {{ key | convertKey }}
             </v-col>
-            <v-col cols="12" md="10" :class="{'pt-0': $vuetify.breakpoint.smAndDown }">
-              <span v-if="key !== 'amount'">{{ value }}</span>
-              <amount v-else :micro-amount="value.amount" :denom="value.denom" />
+            <v-col
+              cols="12"
+              md="10"
+              :class="{ 'pt-0': $vuetify.breakpoint.smAndDown }"
+            >
+              <template
+                v-if="value.length > 10 && value.startsWith('bitsong1')"
+              >
+                <nuxt-link :to="`/account/${value}`">{{ value }}</nuxt-link>
+              </template>
+
+              <template
+                v-else-if="
+                  value.length > 10 && value.startsWith('bitsongvaloper')
+                "
+              >
+                <nuxt-link :to="`/staking/${value}`">{{ value }}</nuxt-link>
+              </template>
+
+              <amount
+                v-else-if="key === 'amount' && value.denom !== undefined"
+                :micro-amount="value.amount"
+                :denom="value.denom"
+              />
+              <template
+                v-else-if="key === 'amount' && value.length > 0"
+                v-for="(amt, i) in value"
+              >
+                <amount
+                  :key="i"
+                  :micro-amount="amt.amount"
+                  :denom="amt.denom"
+                />
+              </template>
+
+              <template v-else>
+                {{ value }}
+              </template>
             </v-col>
           </v-row>
         </v-container>
@@ -30,7 +70,7 @@ export default {
   props: {
     msgs: {
       type: Array,
-      default () {
+      default() {
         return []
       }
     }
@@ -39,13 +79,13 @@ export default {
     Amount
   },
   filters: {
-    convertMessageType: (value) => {
+    convertMessageType: value => {
       return value
         .replace('cosmos-sdk/Msg', '')
         .replace(/([A-Z])/g, ' $1')
         .trim()
     },
-    convertKey: (value) => {
+    convertKey: value => {
       return upperCaseFirstLetter(value.replace('_', ' ').trim())
     }
   }

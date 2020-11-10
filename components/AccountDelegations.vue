@@ -1,10 +1,7 @@
 <template>
-  <v-card>
-    <v-list v-for="(delegation, i) in delegations" :key="i">
+  <v-card elevation="1">
+    <v-list v-for="(delegation, i) in delegations" :key="i" class="py-0">
       <v-list-item>
-        <v-list-item-avatar>
-          <v-icon>mdi-help-circle-outline</v-icon>
-        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>
             <amount
@@ -33,8 +30,8 @@ export default {
       type: Array,
       default() {
         return []
-      },
-    },
-  },
+      }
+    }
+  }
 }
 </script>

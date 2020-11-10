@@ -61,6 +61,18 @@
               </div>
             </template>
 
+            <template v-else-if="header.value === 'to'">
+              <div class="text-truncate address text-mono">
+                <span v-if="item.messages[0].type === 'cosmos-sdk/MsgSend'">
+                  <nuxt-link
+                    :to="`/account/${item.messages[0].value.to_address}`"
+                    >{{ item.messages[0].value.to_address }}</nuxt-link
+                  >
+                </span>
+                <span v-else>-</span>
+              </div>
+            </template>
+
             <template v-else-if="header.value === 'messages'">
               <v-chip outlined small>{{
                 item.messages[0].type | convertMessageType
@@ -108,6 +120,7 @@ const HEADERS = [
   { text: 'Height', value: 'height' },
   { text: 'Age', value: 'timestamp' },
   { text: 'From', value: 'signatures' },
+  { text: 'To', value: 'to' },
   { text: 'Msgs', value: 'messages' },
   { text: 'Amount', value: 'amount' }
 ]
@@ -157,11 +170,13 @@ div.timestamp
     &.height
       width: 5%
     &.signatures
-      width: 37%
+      width: 13%
+    &.to
+      width: 13%
     &.messages
-      width: 40%
+      width: 25%
     &.amount
-      width: 20%
+      width: 25%
   .regular-row td
     padding: 8px 16px !important
   .regular-row.has-extra-row td

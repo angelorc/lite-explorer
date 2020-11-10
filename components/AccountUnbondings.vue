@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card elevation="1">
     <v-data-table
       :headers="headers"
       :items-per-page="5"
@@ -29,11 +29,11 @@ export default {
   props: {
     unbondings: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
-    Amount,
+    Amount
   },
   data() {
     return {
@@ -41,9 +41,9 @@ export default {
         { text: 'Validator Address', value: 'validator_address' },
         { text: 'Height', value: 'creation_height', align: 'center' },
         { text: 'Initial Balance', align: 'right', value: 'initial_balance' },
-        { text: 'Balance', align: 'right', value: 'balance' },
-      ],
+        { text: 'Balance', align: 'right', value: 'balance' }
+      ]
     }
-  },
+  }
 }
 </script>
