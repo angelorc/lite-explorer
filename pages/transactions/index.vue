@@ -13,6 +13,14 @@ import PageTemplate from '@/components/PageTemplate'
 import TransactionsDataTable from '@/components/TransactionsDataTable'
 
 export default {
+  head() {
+    const title = `Transactions`
+
+    return {
+      title: title,
+      meta: [{ hid: 'og-title', name: 'og:title', content: title }]
+    }
+  },
   components: {
     PageTemplate,
     TransactionsDataTable

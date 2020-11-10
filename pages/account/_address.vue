@@ -68,6 +68,14 @@ import Amount from '@/components/Amount'
 import TransactionsDataTable from '@/components/TransactionsDataTable'
 
 export default {
+  head() {
+    const title = `Account ${this.address}`
+
+    return {
+      title: title,
+      meta: [{ hid: 'og-title', name: 'og:title', content: title }]
+    }
+  },
   components: {
     PageTemplate,
     TransactionsDataTable,

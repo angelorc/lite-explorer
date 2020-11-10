@@ -10,9 +10,17 @@ import PageTemplate from '@/components/PageTemplate'
 import ValidatorList from '@/components/ValidatorList'
 
 export default {
+  head() {
+    const title = `Staking`
+
+    return {
+      title: title,
+      meta: [{ hid: 'og-title', name: 'og:title', content: title }]
+    }
+  },
   components: {
     PageTemplate,
-    ValidatorList,
-  },
+    ValidatorList
+  }
 }
 </script>

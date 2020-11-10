@@ -191,6 +191,14 @@ import ValidatorAvatar from '@/components/ValidatorAvatar'
 import { prettyUsd, getTimeDistance } from '@/lib/utils'
 
 export default {
+  head() {
+    const title = `Block ${this.height}`
+
+    return {
+      title: title,
+      meta: [{ hid: 'og-title', name: 'og:title', content: title }]
+    }
+  },
   components: {
     PageTemplate,
     ValidatorAvatar

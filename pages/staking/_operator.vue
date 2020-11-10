@@ -50,6 +50,14 @@
 
 <script>
 export default {
+  head() {
+    const title = `${this.validator.description.moniker} | Validator`
+
+    return {
+      title: title,
+      meta: [{ hid: 'og-title', name: 'og:title', content: title }]
+    }
+  },
   async asyncData({ app, params }) {
     const validator = await app.$api.getValidator(params.operator)
 
@@ -57,8 +65,8 @@ export default {
       validator: {
         ...validator.result,
         delegator_address: validator.delegator_address,
-        address: validator.address,
-      },
+        address: validator.address
+      }
     }
   },
   data() {
@@ -71,8 +79,8 @@ export default {
         delegations: false,
         proposed_blocks: false,
         missed_blocks: false,
-        unbondings: false,
-      },
+        unbondings: false
+      }
     }
   },
   async mounted() {
@@ -121,17 +129,17 @@ export default {
       this.unbondings = unbondings
 
       this.loadings.unbondings = !this.loadings.unbondings
-    },
+    }
   },
   computed: {
     lastBlock() {
       return this.$store.getters[`app/last_block`]
-    },
+    }
   },
   watch: {
     lastBlock() {
       this.getMissedBlocks()
-    },
-  },
+    }
+  }
 }
 </script>
