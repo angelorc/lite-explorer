@@ -32,71 +32,10 @@
       >
     </v-toolbar>
     <v-divider></v-divider>
-    <v-data-table
-      :headers="transactions_header"
-      :hide-default-footer="!default_pagination"
-      :items-per-page="items_per_page"
-      :items="transactions.data"
-    >
-      <template v-slot:item.tx_hash="{ item }">
-        <nuxt-link :to="`/transactions/${item.tx_hash}`">{{
-          item.tx_hash | hash
-        }}</nuxt-link>
-      </template>
-      <template v-slot:item.address="{ item }">
-        <proposer :deladdr="item.signatures[0].address" />
-      </template>
-      <template v-slot:item.messages="{ item }">
-        <v-chip outlined small>{{
-          item.messages[0].type | convertMessageType
-        }}</v-chip>
-        <v-chip outlined small v-if="item.messages.length - 1"
-          >+{{ item.messages.length - 1 }}</v-chip
-        >
-      </template>
-      <template v-slot:item.status="{ item }">
-        <v-tooltip bottom v-if="item.logs">
-          <template v-slot:activator="{ on }">
-            <v-icon color="green" v-on="on">mdi-check-bold</v-icon>
-          </template>
-          <span>Success</span>
-        </v-tooltip>
-        <v-tooltip bottom v-else>
-          <template v-slot:activator="{ on }">
-            <v-icon color="red" v-on="on">mdi-alert-circle</v-icon>
-          </template>
-          <span>Fail</span>
-        </v-tooltip>
-      </template>
-      <template v-slot:item.amount="{ item }">
-        <span v-if="item.messages[0].type === 'cosmos-sdk/MsgSend'">
-          <amount
-            v-for="amount in item.messages[0].value.amount"
-            v-bind:key="amount.amount"
-            :microAmount="amount.amount"
-            :denom="amount.denom"
-          />
-        </span>
-        <nuxt-link
-          v-else
-          :to="`/transactions/${item.tx_hash}`"
-          style="text-decoration: none"
-        >
-          <v-icon size="18">mdi-open-in-new</v-icon>
-        </nuxt-link>
-      </template>
-      <template v-slot:item.height="{ item }">
-        <nuxt-link :to="`/blocks/${item.height}`">{{ item.height }}</nuxt-link>
-      </template>
-      <template v-slot:item.timestamp="{ item }">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
-            <span v-on="on">{{ item.timestamp | timeDistance }}</span>
-          </template>
-          <span>{{ new Date(item.timestamp) }}</span>
-        </v-tooltip>
-      </template>
-    </v-data-table>
+    <app-table
+     field="transactions"
+     :items="transactions.data"
+    ></app-table>
     <v-divider v-if="!default_pagination"></v-divider>
     <v-toolbar flat v-if="!default_pagination">
       <div class="flex-grow-1"></div>
@@ -119,6 +58,7 @@ import { shortFilter, getTimeDistance } from '~/lib/utils'
 import Pagination from '@/components/Pagination'
 import Amount from '@/components/Amount'
 import Proposer from '@/components/Proposer'
+import AppTable from '@/components/app/Table'
 
 export default {
   props: {
@@ -150,6 +90,7 @@ export default {
     Pagination,
     Amount,
     Proposer,
+    AppTable
   },
   filters: {
     hash: (value) => shortFilter(value, 5),

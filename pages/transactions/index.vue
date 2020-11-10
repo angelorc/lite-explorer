@@ -1,11 +1,6 @@
 <template>
   <page-template>
     <h1 class="text-h4 mb-4">Transactions</h1>
-    <app-table
-     field="transactions"
-     :items="txs.data"
-     class="mb-8"
-    >
     </app-table>
     <transactions-data-table :transactions="txs"></transactions-data-table>
   </page-template>

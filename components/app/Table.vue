@@ -1,109 +1,116 @@
 <template>
-  <app-sheet>
-    <v-simple-table
-      class="txs-table"
-      v-bind="$attrs"
-      v-on="$listeners"
-    >
-      <thead>
-        <tr>
-          <th
-            v-for="header in headers"
-            :key="header.value"
+  <v-simple-table
+    class="txs-table"
+    v-bind="$attrs"
+    v-on="$listeners"
+  >
+    <thead>
+      <tr>
+        <th
+          v-for="header in headers"
+          :key="header.value"
+          :class="header.value"
+        >
+          <div
+            class="text-capitalize"
+            v-text="header.text"
+          />
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <template v-for="item in items">
+        <tr
+          :key="item.name"
+        >
+          <td
+            v-for="(header, i) in headers"
+            :key="i"
             :class="header.value"
           >
-            <div
-              class="text-capitalize"
-              v-text="header.text"
-            />
-          </th>
-        </tr>
-      </thead>
+            <template v-if="header.value === 'height'">
+              <div
+                class="font-weight-bold text-mono"
+              >
+                <nuxt-link :to="`/blocks/${item[header.value]}`">{{
+                  item[header.value]
+                }}</nuxt-link>
+              </div>
+            </template>
 
-      <tbody>
-        <template v-for="item in items">
-          <tr
-            :key="item.name"
-          >
-            <td
-              v-for="(header, i) in headers"
-              :key="i"
-              :class="header.value"
-            >
-              <template v-if="header.value === 'height'">
-                <div
-                  class="font-weight-bold text-mono"
-                  v-text="item[header.value]"
-                />
-              </template>
+            <template v-else-if="header.value === 'tx_hash'">
+              <div
+                class="text-truncate tx_hash mt-2"
+              >
+              <v-tooltip bottom v-if="!item.logs">
+                <template v-slot:activator="{ on }">
+                  <v-icon style="margin-top:-3px" size="16" color="red" v-on="on">mdi-alert-circle</v-icon>
+                </template>
+                <span>Fail</span>
+              </v-tooltip>
+              <nuxt-link :to="`/transactions/${item[header.value]}`">{{
+                item[header.value]
+              }}</nuxt-link>
+              </div>
+            </template>
 
-              <template v-else-if="header.value === 'tx_hash'">
-
-                <div
-                  class="text-truncate mt-3"
-                >
-                <v-tooltip bottom v-if="!item.logs">
-                  <template v-slot:activator="{ on }">
-                    <v-icon size="16" color="red" v-on="on">mdi-alert-circle</v-icon>
-                  </template>
-                  <span>Fail</span>
-                </v-tooltip>
-                {{item[header.value]}}
-                </div>
-              </template>
-
-              <template v-else-if="header.value === 'timestamp'">
+            <template v-else-if="header.value === 'timestamp'">
+              <div class="timestamp">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     {{ item[header.value] | timeDistance }}
                   </template>
                   <span>item[header.value]</span>
                 </v-tooltip>
-              </template>
+              </div>
+            </template>
 
-              <template v-else-if="header.value === 'signatures'">
-                <div
-                  class="text-truncate text-mono"
-                  v-text="item[header.value][0].address"
+            <template v-else-if="header.value === 'signatures'">
+              <div
+                class="text-truncate address text-mono"
+              >
+                <nuxt-link :to="`/account/${item[header.value][0].address}`">{{
+                  item[header.value][0].address
+                }}</nuxt-link>
+              </div>
+            </template>
+
+            <template v-else-if="header.value === 'messages'">
+              <v-chip outlined small>{{
+                item.messages[0].type | convertMessageType
+              }}</v-chip>
+              <v-chip outlined small v-if="item.messages.length - 1"
+                >+{{ item.messages.length - 1 }}</v-chip
+              >
+            </template>
+
+            <template v-else-if="header.value === 'amount'">
+              <span v-if="item.messages[0].type === 'cosmos-sdk/MsgSend'">
+                <amount
+                  v-for="amount in item.messages[0].value.amount"
+                  v-bind:key="amount.amount"
+                  :microAmount="amount.amount"
+                  :denom="amount.denom"
                 />
-              </template>
+              </span>
+              <nuxt-link
+                v-else
+                :to="`/transactions/${item.tx_hash}`"
+                style="text-decoration: none"
+              >
+                <v-icon size="18">mdi-open-in-new</v-icon>
+              </nuxt-link>
+            </template>
 
-              <template v-else-if="header.value === 'messages'">
-                <v-chip outlined small>{{
-                  item.messages[0].type | convertMessageType
-                }}</v-chip>
-                <v-chip outlined small v-if="item.messages.length - 1"
-                  >+{{ item.messages.length - 1 }}</v-chip
-                >
-              </template>
-
-              <template v-else-if="header.value === 'amount'">
-                <span v-if="item.messages[0].type === 'cosmos-sdk/MsgSend'">
-                  <amount
-                    v-for="amount in item.messages[0].value.amount"
-                    v-bind:key="amount.amount"
-                    :microAmount="amount.amount"
-                    :denom="amount.denom"
-                  />
-                </span>
-                <nuxt-link
-                  v-else
-                  :to="`/transactions/${item.tx_hash}`"
-                  style="text-decoration: none"
-                >
-                  <v-icon size="18">mdi-open-in-new</v-icon>
-                </nuxt-link>
-              </template>
-
-              <template v-else>
-                {{ item[header.value] }}
-              </template>
-            </td>
-          </tr>
-        </template>
-      </tbody>
-    </v-simple-table>
-  </app-sheet>
+            <template v-else>
+              {{ item[header.value] }}
+            </template>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </v-simple-table>
 </template>
 
 <script>
@@ -150,18 +157,26 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  div.timestamp
+    width: 100px
+    display: inline-block
+  .text-truncate
+    &.tx_hash
+      max-width: 180px
+      display: inline-block
+    &.address
+      max-width: 250px
+      display: inline-block
   .txs-table
     th
       &.height
         width: 5%
-      &.timestamp
-        width: 25%
       &.signatures
         width: 37%
       &.messages
-        width: 25%
+        width: 40%
       &.amount
-        width: 8%
+        width: 20%
     .regular-row td
       padding: 8px 16px !important
     .regular-row.has-extra-row td
@@ -172,8 +187,4 @@ export default {
       padding: 8px 0 !important
     .v-markdown ::v-deep p
       margin-bottom: 0
-    td
-      &.tx_hash
-        max-width: 180px
-        display: inline-block
 </style>

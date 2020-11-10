@@ -132,7 +132,7 @@ export default {
       })
 
       this.unbondings.map((d) => {
-        balances.unbonding += Number(d.balance.amount)
+        balances.unbonding += Number(d.balance && d.balance.amount ? d.balance.amount : 0)
       })
 
       const reward = this.rewards.find(
