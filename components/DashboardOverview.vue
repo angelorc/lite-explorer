@@ -107,7 +107,7 @@ export default {
   methods: {
     percentage(amt) {
       return parseFloat(amt * 100).toFixed(2)
-    },
+    }
   },
   computed: {
     stakeDenom() {
@@ -136,7 +136,7 @@ export default {
     },
     signatures() {
       return this.$store.getters[`app/signatures`]
-    },
-  },
+    }
+  }
 }
 </script>
