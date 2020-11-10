@@ -1,38 +1,19 @@
 <template>
-  <v-simple-table
-    class="txs-table"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
+  <v-simple-table class="txs-table" v-bind="$attrs" v-on="$listeners">
     <thead>
       <tr>
-        <th
-          v-for="header in headers"
-          :key="header.value"
-          :class="header.value"
-        >
-          <div
-            class="text-capitalize"
-            v-text="header.text"
-          />
+        <th v-for="header in headers" :key="header.value" :class="header.value">
+          <div class="text-capitalize" v-text="header.text" />
         </th>
       </tr>
     </thead>
 
     <tbody>
       <template v-for="item in items">
-        <tr
-          :key="item.name"
-        >
-          <td
-            v-for="(header, i) in headers"
-            :key="i"
-            :class="header.value"
-          >
+        <tr :key="item.name">
+          <td v-for="(header, i) in headers" :key="i" :class="header.value">
             <template v-if="header.value === 'height'">
-              <div
-                class="font-weight-bold text-mono"
-              >
+              <div class="font-weight-bold text-mono">
                 <nuxt-link :to="`/blocks/${item[header.value]}`">{{
                   item[header.value]
                 }}</nuxt-link>
@@ -40,18 +21,22 @@
             </template>
 
             <template v-else-if="header.value === 'tx_hash'">
-              <div
-                class="text-truncate tx_hash mt-2"
-              >
-              <v-tooltip bottom v-if="!item.logs">
-                <template v-slot:activator="{ on }">
-                  <v-icon style="margin-top:-3px" size="16" color="red" v-on="on">mdi-alert-circle</v-icon>
-                </template>
-                <span>Fail</span>
-              </v-tooltip>
-              <nuxt-link :to="`/transactions/${item[header.value]}`">{{
-                item[header.value]
-              }}</nuxt-link>
+              <div class="text-truncate tx_hash mt-2">
+                <v-tooltip bottom v-if="!item.logs">
+                  <template v-slot:activator="{ on }">
+                    <v-icon
+                      style="margin-top: -3px"
+                      size="16"
+                      color="red"
+                      v-on="on"
+                      >mdi-alert-circle</v-icon
+                    >
+                  </template>
+                  <span>Fail</span>
+                </v-tooltip>
+                <nuxt-link :to="`/transactions/${item[header.value]}`">{{
+                  item[header.value]
+                }}</nuxt-link>
               </div>
             </template>
 
@@ -59,17 +44,17 @@
               <div class="timestamp">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    {{ item[header.value] | timeDistance }}
+                    <span v-on="on">{{
+                      item[header.value] | timeDistance
+                    }}</span>
                   </template>
-                  <span>item[header.value]</span>
+                  <span>{{ new Date(item[header.value]) }}</span>
                 </v-tooltip>
               </div>
             </template>
 
             <template v-else-if="header.value === 'signatures'">
-              <div
-                class="text-truncate address text-mono"
-              >
+              <div class="text-truncate address text-mono">
                 <nuxt-link :to="`/account/${item[header.value][0].address}`">{{
                   item[header.value][0].address
                 }}</nuxt-link>
@@ -124,11 +109,11 @@ const HEADERS = [
   { text: 'Age', value: 'timestamp' },
   { text: 'From', value: 'signatures' },
   { text: 'Msgs', value: 'messages' },
-  { text: 'Amount', value: 'amount' },
+  { text: 'Amount', value: 'amount' }
 ]
 
 export default {
-  name: 'AppTable',
+  name: 'TransactionsTable',
 
   components: {
     AppSheet
@@ -139,52 +124,52 @@ export default {
   },
 
   filters: {
-    timeDistance: (value) => getTimeDistance(value),
-    convertMessageType: (value) => {
+    timeDistance: value => getTimeDistance(value),
+    convertMessageType: value => {
       return value
         .replace('cosmos-sdk/Msg', '')
         .replace(/([A-Z])/g, ' $1')
         .trim()
-    },
+    }
   },
 
   computed: {
-    headers () {
+    headers() {
       return HEADERS
     }
-  },
+  }
 }
 </script>
 
 <style lang="sass" scoped>
-  div.timestamp
-    width: 100px
+div.timestamp
+  width: 100px
+  display: inline-block
+.text-truncate
+  &.tx_hash
+    max-width: 180px
     display: inline-block
-  .text-truncate
-    &.tx_hash
-      max-width: 180px
-      display: inline-block
-    &.address
-      max-width: 250px
-      display: inline-block
-  .txs-table
-    th
-      &.height
-        width: 5%
-      &.signatures
-        width: 37%
-      &.messages
-        width: 40%
-      &.amount
-        width: 20%
-    .regular-row td
-      padding: 8px 16px !important
-    .regular-row.has-extra-row td
-      border-bottom: none !important
-    .extra-row:hover
-      background: initial !important
-    .extra-row td
-      padding: 8px 0 !important
-    .v-markdown ::v-deep p
-      margin-bottom: 0
+  &.address
+    max-width: 250px
+    display: inline-block
+.txs-table
+  th
+    &.height
+      width: 5%
+    &.signatures
+      width: 37%
+    &.messages
+      width: 40%
+    &.amount
+      width: 20%
+  .regular-row td
+    padding: 8px 16px !important
+  .regular-row.has-extra-row td
+    border-bottom: none !important
+  .extra-row:hover
+    background: initial !important
+  .extra-row td
+    padding: 8px 0 !important
+  .v-markdown ::v-deep p
+    margin-bottom: 0
 </style>

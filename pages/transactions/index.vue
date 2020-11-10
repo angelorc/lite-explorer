@@ -1,32 +1,36 @@
 <template>
   <page-template>
     <h1 class="text-h4 mb-4">Transactions</h1>
-    </app-table>
-    <transactions-data-table :transactions="txs"></transactions-data-table>
+    <transactions-data-table
+      :transactions="txs"
+      view-all
+    ></transactions-data-table>
   </page-template>
 </template>
 
 <script>
 import PageTemplate from '@/components/PageTemplate'
 import TransactionsDataTable from '@/components/TransactionsDataTable'
-import AppTable from '@/components/app/Table'
 
 export default {
   components: {
     PageTemplate,
-    TransactionsDataTable,
-    AppTable
+    TransactionsDataTable
   },
   watchQuery: ['page'],
-  key: (to) => to.fullPath,
+  key: to => to.fullPath,
   async asyncData({ app, query }) {
     let page = 1
-    if (query.page) page = parseInt(query.page)
+    let limit = 25
 
-    const txs = await app.$api.getTransactions(page)
+    if (query.page) page = parseInt(query.page)
+    let offset = page * limit - limit
+    let account = query.account ? query.account : null
+
+    const txs = await app.$api.getTransactions(account, offset, limit)
 
     return {
-      txs,
+      txs
     }
   }
 }

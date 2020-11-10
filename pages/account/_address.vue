@@ -36,8 +36,7 @@
     <transactions-data-table
       class="mb-8"
       :transactions="txs"
-      default_pagination
-      :items_per_page="10"
+      :address="address"
     ></transactions-data-table>
 
     <h2 class="text-h5 mb-4">
@@ -72,12 +71,12 @@ export default {
   components: {
     PageTemplate,
     TransactionsDataTable,
-    Amount,
+    Amount
   },
   data() {
     return {
       tabStaking: 0,
-      tabBalance: 0,
+      tabBalance: 0
     }
   },
   async asyncData({ app, params }) {
@@ -88,13 +87,13 @@ export default {
       account.value.coins = [
         {
           denom: process.env.MICROSTAKEDENOM,
-          amount: 0,
-        },
+          amount: 0
+        }
       ]
     }
 
     const delegations = await app.$btsg.getDelegations(params.address)
-    const txs = await app.$api.getTransactionsByAccount(params.address, 100)
+    const txs = await app.$api.getTransactions(params.address, 0, 10)
     const unbondings = await app.$btsg.getUnbondingDelegations(params.address)
     const rewards = await app.$btsg.getDelegatorRewards(params.address)
     const commission = await app.$api.getValidatorDelegatorReward(
@@ -115,7 +114,7 @@ export default {
       commission:
         commission !== undefined
           ? commission.result.val_commission[0].amount
-          : 0,
+          : 0
     }
   },
   computed: {
@@ -124,19 +123,21 @@ export default {
         delegated: 0,
         unbonding: 0,
         reward: 0,
-        commission: 0,
+        commission: 0
       }
 
-      this.delegations.map((d) => {
+      this.delegations.map(d => {
         balances.delegated += Number(d.balance.amount)
       })
 
-      this.unbondings.map((d) => {
-        balances.unbonding += Number(d.balance && d.balance.amount ? d.balance.amount : 0)
+      this.unbondings.map(d => {
+        balances.unbonding += Number(
+          d.balance && d.balance.amount ? d.balance.amount : 0
+        )
       })
 
       const reward = this.rewards.find(
-        (r) => r.denom === this.$store.getters[`app/stakeDenom`]
+        r => r.denom === this.$store.getters[`app/stakeDenom`]
       )
 
       if (reward !== undefined) {
@@ -149,7 +150,7 @@ export default {
     },
     sumBalances() {
       const available = this.balances.find(
-        (r) => r.denom === this.$store.getters[`app/stakeDenom`]
+        r => r.denom === this.$store.getters[`app/stakeDenom`]
       )
 
       return Number(
@@ -159,7 +160,7 @@ export default {
           this.stakingBalance.commission +
           Number(available !== undefined ? available.amount : 0)
       )
-    },
-  },
+    }
+  }
 }
 </script>

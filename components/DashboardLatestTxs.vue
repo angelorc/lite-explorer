@@ -1,5 +1,5 @@
 <template>
-  <v-card tile elevation="1":loading="loading">
+  <v-card tile elevation="1" :loading="loading">
     <v-card-title>
       <v-icon large left>mdi-bank-transfer</v-icon>
       <h3 class="title">Transactions</h3>
@@ -49,9 +49,7 @@
                 <span>Fail</span>
               </v-tooltip>
             </div>
-
-            </v-col
-          >
+          </v-col>
 
           <v-col class="body-2 grey--text text--darken-3" cols="12">
             <v-chip outlined small>{{
@@ -83,19 +81,19 @@ import {
 
 export default {
   filters: {
-    hash: (value) => shortFilter(value, 12),
-    timeDistance: (value) => prettyUsd(getTimeDistance(value)),
-    convertMessageType: (value) => {
+    hash: value => shortFilter(value, 12),
+    timeDistance: value => prettyUsd(getTimeDistance(value)),
+    convertMessageType: value => {
       return value
         .replace('cosmos-sdk/Msg', '')
         .replace(/([A-Z])/g, ' $1')
         .trim()
-    },
+    }
   },
   data() {
     return {
       txs: [],
-      loading: true,
+      loading: true
     }
   },
   created() {
@@ -105,7 +103,7 @@ export default {
     async getLatestTxs() {
       this.loading = true
       const txs = await this.$api.getLatestTxs()
-      this.txs = txs.data
+      this.txs = txs.docs
       this.loading = false
     }
   },

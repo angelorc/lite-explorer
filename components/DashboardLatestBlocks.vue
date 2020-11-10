@@ -62,7 +62,7 @@ import { sleep, prettyUsd, getTimeDistance } from '@/lib/utils'
 
 export default {
   filters: {
-    timeDistance: (value) => prettyUsd(getTimeDistance(value)),
+    timeDistance: value => prettyUsd(getTimeDistance(value))
   },
   data() {
     return {
@@ -77,7 +77,7 @@ export default {
     async getLatestBlocks() {
       this.loading = true
       const blocks = await this.$api.getLatestBlocks()
-      this.blocks = blocks.data
+      this.blocks = blocks.docs
       this.loading = false
     }
   },
