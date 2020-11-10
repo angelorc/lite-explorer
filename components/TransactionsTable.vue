@@ -91,6 +91,14 @@
                   :denom="amount.denom"
                 />
               </span>
+              <span
+                v-else-if="item.messages[0].type === 'cosmos-sdk/MsgDelegate'"
+              >
+                <amount
+                  :microAmount="item.messages[0].value.amount.amount"
+                  :denom="item.messages[0].value.amount.denom"
+                />
+              </span>
               <nuxt-link
                 v-else
                 :to="`/transactions/${item.tx_hash}`"
@@ -98,6 +106,31 @@
               >
                 <v-icon size="18">mdi-open-in-new</v-icon>
               </nuxt-link>
+            </template>
+
+            <template
+              v-else-if="
+                header.value === 'fee' &&
+                  item.fee.amount &&
+                  item.fee.amount.length > 0
+              "
+            >
+              <amount
+                v-for="(amount, i) in item.fee.amount"
+                v-bind:key="i"
+                :microAmount="
+                  item.fee.amount[i].amount ? item.fee.amount[i].amount : 0
+                "
+                :denom="item.fee.amount[i].denom"
+              />
+            </template>
+            <template
+              v-else-if="header.value === 'fee' && item.fee.amount === null"
+            >
+              <amount
+                :microAmount="0"
+                :denom="$store.getters[`app/stakeDenom`]"
+              />
             </template>
 
             <template v-else>
@@ -122,7 +155,8 @@ const HEADERS = [
   { text: 'From', value: 'signatures' },
   { text: 'To', value: 'to' },
   { text: 'Msgs', value: 'messages' },
-  { text: 'Amount', value: 'amount' }
+  { text: 'Amount', value: 'amount' },
+  { text: 'Fee', value: 'fee' }
 ]
 
 export default {
@@ -156,27 +190,29 @@ export default {
 
 <style lang="sass" scoped>
 div.timestamp
-  width: 100px
+  width: 80px
   display: inline-block
 .text-truncate
   &.tx_hash
-    max-width: 180px
+    max-width: 160px
     display: inline-block
   &.address
-    max-width: 250px
+    max-width: 180px
     display: inline-block
 .txs-table
   th
     &.height
-      width: 5%
+      width: 4%
     &.signatures
-      width: 13%
+      width: 10%
     &.to
-      width: 13%
+      width: 10%
     &.messages
-      width: 25%
+      width: 20%
     &.amount
-      width: 25%
+      width: 13%
+    &.fee
+      width: 12%
   .regular-row td
     padding: 8px 16px !important
   .regular-row.has-extra-row td
