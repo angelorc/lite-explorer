@@ -34,13 +34,9 @@ import Amount from '@/components/Amount'
 
 export default {
   props: {
-    unbondings: {
-      type: Array,
+    valoper: {
+      type: String,
       required: true,
-    },
-    loading: {
-      type: Boolean,
-      default: false
     }
   },
   components: {
@@ -54,7 +50,16 @@ export default {
         { text: 'Amount', align: 'right', value: 'amount' },
         { text: 'Completition Time', align: 'right', value: 'completion_time' },
       ],
+      unbondings: [],
+      loading: true
     }
   },
+  async created() {
+    const unbondings = await this.$btsg.getValidatorUnbondings(
+      this.valoper
+    )
+    this.unbondings = unbondings
+    this.loading = false
+  }
 }
 </script>

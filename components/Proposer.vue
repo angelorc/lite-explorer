@@ -59,7 +59,6 @@ export default {
 
       if (this.address) {
         validator = this.validators.find(v => v.address === this.address)
-        console.log(this.address, validator)
         if (validator) {
           account.name = validator.description.moniker
           account.link = `/staking/${validator.operator_address}`

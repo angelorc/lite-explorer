@@ -31,13 +31,9 @@ import Amount from '@/components/Amount'
 
 export default {
   props: {
-    delegations: {
-      type: Array,
-      required: true,
-    },
-    loading: {
-      type: Boolean,
-      default: false
+    valoper: {
+      type: String,
+      required: true
     }
   },
   components: {
@@ -53,7 +49,16 @@ export default {
         },
         { text: 'Amount', value: 'balance', align: 'right', sortable: false },
       ],
+      loading: true,
+      delegations: []
     }
   },
+  async created() {
+    const delegations = await this.$btsg.getValidatorDelegations(
+      this.valoper
+    )
+    this.delegations = delegations.result
+    this.loading = false
+  }
 }
 </script>

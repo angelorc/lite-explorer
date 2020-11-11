@@ -221,7 +221,6 @@ export default {
   },
   async created() {
     const txs = await this.$api.getTransactions(null, this.height, 0, 10)
-    console.log(txs)
     this.txs = txs
   }
 }

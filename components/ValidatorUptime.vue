@@ -1,9 +1,9 @@
 <template>
-  <v-card :loading="lastBlock === 0">
+  <v-card :loading="lastBlock === 0" v-if="success">
     <v-card-title
       >Uptime last 100 blocks
       <span class="caption ml-2"
-        >({{ minBlock }} - {{ lastBlock }})</span
+        >{{ uptime }}% ({{ minBlock }} - {{ lastBlock }})</span
       ></v-card-title
     >
     <v-card-text>
@@ -30,35 +30,65 @@
 
 <script>
 export default {
-  props: ['missedBlocks'],
+  props: {
+    valoper: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       blocks: [],
+      success: true
     }
   },
-  created() {
-    this.create()
+  async created() {
+    await this.create()
   },
   methods: {
-    create() {
+    async create() {
+      if (this.lastBlock === 1) return
+
+      const uptime = await this.$api.getUptime(
+        this.valoper, this.minBlock, this.lastBlock, true
+      )
+
+      if (uptime.success === false) {
+        this.success = false
+        return
+      }
+
+      const signedBlocks = uptime.blocks
+
       for (let i = this.lastBlock; i > this.minBlock; i--) {
-        const missed = this.missedBlocks.find((b) => b.height === i)
+        const signed = signedBlocks.findIndex((b) => b === i)
         this.blocks.push({
           height: i,
-          missed: missed !== undefined,
+          missed: signed === -1,
         })
       }
     },
-    refresh() {
-      if (this.blocks.length === 0) this.create()
+    async refresh() {
+      try {
+        if (!this.success) return
+        if (this.blocks.length === 0) this.create()
 
-      this.blocks.splice(0, 0, {
-        height: this.lastBlock,
-        missed:
-          this.missedBlocks.length &&
-          this.missedBlocks[0].height === Number(this.lastBlock),
-      })
-      this.blocks.pop()
+        const uptime = await this.$api.getUptime(
+          this.valoper, this.blocks[0].height + 1, this.lastBlock, true
+        )
+
+        if (uptime.success === false) return
+
+        const signed = uptime.blocks.findIndex((b) => b === this.lastBlock)
+
+        this.blocks.splice(0, 0, {
+          height: this.lastBlock,
+          missed: signed === -1,
+        })
+        this.blocks.pop()
+      } catch (e) {
+
+      }
     },
   },
   watch: {
@@ -70,15 +100,20 @@ export default {
     lastBlock() {
       const app_block = this.$store.getters[`app/last_block`]
       if (app_block === 0) {
-        1
+        return 1
       }
 
-      return this.$store.getters[`app/last_block`]
+      return app_block - 1
     },
     minBlock() {
       if (this.lastBlock > 100) return Number(this.lastBlock - 100)
       return 1
     },
+    uptime() {
+      const missed = this.blocks.filter(b => b.missed === true).length
+      const blocks = this.blocks.length
+      return 100 - ((missed / blocks) * 100)
+    }
   },
 }
 </script>

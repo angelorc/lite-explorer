@@ -38,13 +38,9 @@ export default {
     timeDistance: (value) => prettyUsd(getTimeDistance(value)),
   },
   props: {
-    blocks: {
-      type: Array,
-      required: true,
-    },
-    loading: {
-      type: Boolean,
-      default: false
+    valoper: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -53,7 +49,16 @@ export default {
         { text: 'Height', value: 'height' },
         { text: 'Timestamp', align: 'right', value: 'timestamp' },
       ],
+      loading: true,
+      blocks: []
     }
   },
+  async created() {
+    const proposed_blocks = await this.$api.getProposedBlocks(
+      this.valoper
+    )
+    this.blocks = proposed_blocks.data
+    this.loading = false
+  }
 }
 </script>

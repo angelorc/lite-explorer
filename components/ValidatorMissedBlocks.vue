@@ -8,7 +8,7 @@
     <v-data-table
       :headers="headers"
       :items-per-page="5"
-      :items="blocks"
+      :items="missed_blocks"
       height="290"
     >
       <template v-slot:item.proposer_address="{ item }">
@@ -41,13 +41,9 @@ export default {
     timeDistance: (value) => prettyUsd(getTimeDistance(value)),
   },
   props: {
-    blocks: {
-      type: Array,
+    valoper: {
+      type: String,
       required: true,
-    },
-    loading: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -57,7 +53,34 @@ export default {
         { text: 'Proposer Address', value: 'proposer_address' },
         { text: 'Timestamp', align: 'right', value: 'timestamp' },
       ],
+      missed_blocks: [],
+      loading: true
     }
   },
+  created() {
+    this.fetch()
+  },
+  methods: {
+    async fetch() {
+      this.loading = true
+
+      const missed_blocks = await this.$api.getMissedBlocks(
+        this.valoper
+      )
+
+      this.missed_blocks = missed_blocks.data
+      this.loading = false
+    }
+  },
+  computed: {
+    lastBlock() {
+      return this.$store.getters[`app/last_block`]
+    }
+  },
+  watch: {
+    lastBlock() {
+      this.fetch()
+    }
+  }
 }
 </script>
