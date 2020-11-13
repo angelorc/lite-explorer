@@ -2,69 +2,68 @@
   <v-card class="mb-4">
     <v-container>
       <v-row>
-        <v-col
-          md="1"
-          cols="12"
-          :class="{ 'text-center': $vuetify.breakpoint.smAndDown }"
-        >
-          <validator-avatar
-            :identity="validator.description.identity"
-            :valoper="validator.operator_address"
-            size="80px"
-          />
-        </v-col>
-        <v-col cols="12" md="11" align-self="center">
-          <h2 style="display: inline" class="text-h6">
-            {{ validator.description.moniker }}
-          </h2>
-          <v-chip
-            v-if="validator.status === 2"
-            style="margin-top: -5px"
-            class="ml-2 font-weight-medium"
-            color="green"
-            text-color="white"
-            small
-          >
-            Active
-          </v-chip>
-          <v-chip
-            v-if="validator.status !== 2"
-            style="margin-top: -5px"
-            class="ml-2 font-weight-medium"
-            color="red"
-            text-color="white"
-            small
-          >
-            Inactive
-          </v-chip>
-          <v-chip
-            v-if="validator.jailed"
-            style="margin-top: -5px"
-            class="ml-2 font-weight-medium"
-            color="red"
-            text-color="white"
-            small
-          >
-            Jailed
-          </v-chip>
-          <p class="pr-8 mb-2">{{ validator.description.details }}</p>
-          <div>
-            <a
-              v-if="validator.description.website"
-              :href="validator.description.website"
-              target="_blank"
-              class="v-btn v-btn--flat v-btn--icon v-btn--round v-btn--router theme--light v-size--default"
-            >
-              <v-icon left>mdi-web</v-icon>
-            </a>
-            <a
-              v-if="validator.description.security_contact"
-              :href="`mailto:${validator.description.security_contact}`"
-              target="_blank"
-              class="v-btn v-btn--flat v-btn--icon v-btn--round v-btn--router theme--light v-size--default"
-            >
-              <v-icon>mdi-email</v-icon>
-            </a>
+        <v-col cols="12">
+          <div class="d-flex">
+            <validator-avatar
+              :identity="validator.description.identity"
+              :valoper="validator.operator_address"
+              size="80px"
+            />
+            <div>
+              <h2 class="d-inline-flex ml-2 text-h6">
+                {{ validator.description.moniker }}
+              </h2>
+              <v-chip
+                v-if="validator.status === 2"
+                style="margin-top: -5px"
+                class="ml-2 font-weight-medium"
+                color="green"
+                text-color="white"
+                small
+              >
+                Active
+              </v-chip>
+              <v-chip
+                v-if="validator.status !== 2"
+                style="margin-top: -5px"
+                class="ml-2 font-weight-medium"
+                color="red"
+                text-color="white"
+                small
+              >
+                Inactive
+              </v-chip>
+              <v-chip
+                v-if="validator.jailed"
+                style="margin-top: -5px"
+                class="ml-2 font-weight-medium"
+                color="red"
+                text-color="white"
+                small
+              >
+                Jailed
+              </v-chip>
+              <p class="pr-8 ml-2 mb-2">{{ validator.description.details }}</p>
+
+              <div>
+                <v-btn
+                  v-if="validator.description.website"
+                  :href="validator.description.website"
+                  target="_blank"
+                  icon
+                >
+                  <v-icon>mdi-web</v-icon>
+                </v-btn>
+                <v-btn
+                  v-if="validator.description.security_contact"
+                  :href="`mailto:${validator.description.security_contact}`"
+                  target="_blank"
+                  icon
+                >
+                  <v-icon>mdi-email</v-icon>
+                </v-btn>
+              </div>
+            </div>
           </div>
         </v-col>
       </v-row>

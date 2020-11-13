@@ -31,13 +31,7 @@
               }}</span>
             </td>
             <td class="font-weight-bold">
-              <div
-                style="
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-              "
-              >
+              <div class="d-flex align-center justify-start">
                 <validator-avatar
                   :identity="validator.description.identity"
                   :valoper="validator.operator_address"
