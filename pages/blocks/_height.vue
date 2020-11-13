@@ -1,7 +1,7 @@
 <template>
   <page-template>
     <h1 class="text-h4 mb-4">
-      Block <span class="text-h6">#{{ block.block.header.height }}</span>
+      <nuxt-link to="/blocks">Blocks</nuxt-link> <v-icon>mdi-chevron-right</v-icon> <span class="text-h6">#{{ block.block.header.height }}</span>
     </h1>
     <v-card class="mb-8">
       <v-container>
