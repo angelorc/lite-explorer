@@ -3,7 +3,7 @@
     <template v-for="(msg, i) in msgs">
       <v-card-title :key="i">{{ msg.type | convertMessageType }}</v-card-title>
       <template v-for="([key, value], i) in Object.entries(msg.value)">
-        <v-container class="py-0" :key="i">
+        <v-container class="py-0" :key="`msg${i}`">
           <v-row>
             <v-col
               cols="12"
@@ -19,14 +19,14 @@
               :class="{ 'pt-0': $vuetify.breakpoint.smAndDown }"
             >
               <template
-                v-if="value.length > 10 && value.startsWith('bitsong1')"
+                v-if="value !== null && value.length > 10 && value.startsWith('bitsong1')"
               >
                 <nuxt-link :to="`/account/${value}`">{{ value }}</nuxt-link>
               </template>
 
               <template
                 v-else-if="
-                  value.length > 10 && value.startsWith('bitsongvaloper')
+                  value !== null && value.length > 10 && value.startsWith('bitsongvaloper')
                 "
               >
                 <nuxt-link :to="`/staking/${value}`">{{ value }}</nuxt-link>
