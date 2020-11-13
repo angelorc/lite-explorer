@@ -7,7 +7,11 @@
           cols="12"
           :class="{ 'text-center': $vuetify.breakpoint.smAndDown }"
         >
-          <validator-avatar :validator="validator" size="80px" />
+          <validator-avatar
+            :identity="validator.description.identity"
+            :valoper="validator.operator_address"
+            size="80px"
+          />
         </v-col>
         <v-col cols="12" md="11" align-self="center">
           <h2 style="display: inline" class="text-h6">
@@ -186,18 +190,18 @@ import Amount from '@/components/Amount'
 export default {
   components: {
     ValidatorAvatar,
-    Amount,
+    Amount
   },
   props: {
     validator: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     stakeDenom() {
       return process.env.STAKEDENOM
-    },
-  },
+    }
+  }
 }
 </script>

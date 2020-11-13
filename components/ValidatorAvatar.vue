@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-avatar :size="size" v-if="!profile_pic" v-html="avatar"></v-avatar>
+    <v-avatar
+      color="white"
+      :size="size"
+      v-if="!profile_pic"
+      v-html="avatar"
+    ></v-avatar>
     <v-avatar :size="size" v-else>
       <img :src="profile_pic" />
     </v-avatar>
@@ -9,43 +14,42 @@
 
 <script>
 import jdenticon from 'jdenticon'
+
 export default {
   props: {
-    validator: {
-      type: Object,
-      required: true,
-    },
+    identity: String,
+    valoper: String,
     size: {
       type: String,
-      deafult: '36px',
-    },
+      default: '36px'
+    }
   },
   data() {
     return {
-      profile_pic: null,
+      profile_pic: null
     }
   },
   created() {
-    if (this.validator.description && this.validator.description.identity) {
-      this.getValidatorProfileUrl(this.validator.description.identity)
+    if (this.identity !== undefined) {
+      this.getValidatorProfileUrl(this.identity)
     }
   },
   computed: {
     avatar() {
       return jdenticon.toSvg(
-        this.validator.address,
+        this.valoper,
         parseInt(this.size.replace('px', ''))
       )
-    },
+    }
   },
   methods: {
     getValidatorProfileUrl(identity) {
-      if (identity.length == 16) {
+      if (identity !== undefined && identity.length == 16) {
         fetch(
           `https://keybase.io/_/api/1.0/user/lookup.json?key_suffix=${identity}&fields=pictures`
         )
-          .then((res) => res.json())
-          .then((response) => {
+          .then(res => res.json())
+          .then(response => {
             let them = response.them
             if (
               them &&
@@ -58,7 +62,7 @@ export default {
             }
           })
       }
-    },
-  },
+    }
+  }
 }
 </script>

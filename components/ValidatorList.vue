@@ -38,8 +38,9 @@
                 align-items: center;
               "
               >
-                <ValidatorAvatar
-                  :validator="validator"
+                <validator-avatar
+                  :identity="validator.description.identity"
+                  :valoper="validator.operator_address"
                   size="26px"
                   class="mr-4"
                 />

@@ -150,10 +150,7 @@
           <v-list>
             <v-list-item v-for="(val, i) in block.missed_validators" :key="i">
               <v-list-item-avatar>
-                <validator-avatar
-                  :validator="{ address: val, description: null }"
-                  size="26px"
-                ></validator-avatar>
+                <validator-avatar :valoper="val" size="26px"></validator-avatar>
               </v-list-item-avatar>
               <v-list-item-title>
                 <proposer :address="val"></proposer>
@@ -169,10 +166,7 @@
         <v-expansion-panel-content>
           <v-list-item v-for="(val, i) in block.signatures" :key="i">
             <v-list-item-avatar>
-              <validator-avatar
-                :validator="{ address: val, description: null }"
-                size="26px"
-              ></validator-avatar>
+              <validator-avatar :valoper="val" size="26px"></validator-avatar>
             </v-list-item-avatar>
             <v-list-item-title
               ><proposer :address="val"></proposer
