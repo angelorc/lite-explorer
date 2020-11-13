@@ -31,14 +31,8 @@
               }}</span>
             </td>
             <td class="font-weight-bold">
-              <div
-                style="
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-              "
-              >
-                <ValidatorAvatar
+              <div class="d-flex align-center justify-start">
+                <validator-avatar
                   :validator="validator"
                   size="26px"
                   class="mr-4"
