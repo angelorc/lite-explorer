@@ -24,6 +24,10 @@ export default {
 </script>
 
 <style lang="sass">
+.v-application
+  a
+    text-decoration: none
+
 h3
   font-family: 'Source Sans Pro', "Roboto", sans-serif !important
 
