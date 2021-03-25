@@ -120,7 +120,7 @@ export default {
       unbondings,
       rewards: rewards.total,
       commission:
-        commission !== undefined
+        commission !== undefined && commission.result.val_commission !== null
           ? commission.result.val_commission[0].amount
           : 0
     }
@@ -144,9 +144,12 @@ export default {
         )
       })
 
-      const reward = this.rewards.find(
-        r => r.denom === this.$store.getters[`app/stakeDenom`]
-      )
+      const reward =
+        this.rewards !== null
+          ? this.rewards.find(
+              r => r.denom === this.$store.getters[`app/stakeDenom`]
+            )
+          : undefined
 
       if (reward !== undefined) {
         balances.reward += Number(reward.amount)
