@@ -106,9 +106,7 @@ export default {
     },
     '/socket': {
       target: process.env.SOCKET,
-      pathRewrite: {
-        '^/socket': '/'
-      }
+      changeOrigin: true,
     }
   },
 

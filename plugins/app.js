@@ -3,8 +3,8 @@ import Api from '@/lib/api'
 import Btsg from '@/lib/btsg'
 
 export default (ctx, inject) => {
+  //const tm = new Tendermint(process.env.CHAIN_ID, process.env.SOCKET)
   const tm = new Tendermint(process.env.CHAIN_ID, process.env.SOCKET)
-  //const tm = new Tendermint(process.env.CHAIN_ID, 'ws://localhost:3000/socket')
   inject('tm', tm)
   ctx.$tm = tm
 
