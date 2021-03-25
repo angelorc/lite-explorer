@@ -98,16 +98,16 @@ export default {
   },
 
   proxy: {
-    '/lcd': {
-      target: process.env.LCD,
-      pathRewrite: {
-        '^/lcd': '/'
-      }
-    },
-    '/socket': {
-      target: process.env.SOCKET,
-      changeOrigin: true,
-    }
+    // '/lcd': {
+    //   target: process.env.LCD,
+    //   pathRewrite: {
+    //     '^/lcd': '/'
+    //   }
+    // },
+    // '/socket': {
+    //   target: process.env.SOCKET,
+    //   changeOrigin: true,
+    // }
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
