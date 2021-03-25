@@ -4,10 +4,12 @@ import Btsg from '@/lib/btsg'
 
 export default (ctx, inject) => {
   const tm = new Tendermint(process.env.CHAIN_ID, process.env.SOCKET)
+  //const tm = new Tendermint(process.env.CHAIN_ID, 'ws://localhost:3000/socket')
   inject('tm', tm)
   ctx.$tm = tm
 
-  const btsg = new Btsg(process.env.LCD)
+  //const btsg = new Btsg(process.env.LCD)
+  const btsg = new Btsg('/lcd')
   inject('btsg', btsg)
   ctx.$btsg = btsg
 

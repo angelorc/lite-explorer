@@ -98,12 +98,18 @@ export default {
   },
 
   proxy: {
-    // '/rpc': {
-    //   target: process.env.RPC,
-    //   pathRewrite: {
-    //     '^/rpc': '/'
-    //   }
-    // }
+    '/lcd': {
+      target: process.env.LCD,
+      pathRewrite: {
+        '^/lcd': '/'
+      }
+    },
+    '/socket': {
+      target: process.env.SOCKET,
+      pathRewrite: {
+        '^/socket': '/'
+      }
+    }
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
