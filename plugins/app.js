@@ -7,8 +7,8 @@ export default (ctx, inject) => {
   inject('tm', tm)
   ctx.$tm = tm
 
-  const btsg = new Btsg(process.env.LCD)
-  //const btsg = new Btsg('/lcd')
+  //const btsg = new Btsg(process.env.LCD)
+  const btsg = new Btsg('/lcd')
   inject('btsg', btsg)
   ctx.$btsg = btsg
 
