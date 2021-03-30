@@ -69,7 +69,7 @@
             <v-icon left size="18" color="grey darken-3">
               mdi-clock-outline
             </v-icon>
-            {{ tx.timestamp | timeDistance }} ago
+            {{ tx.timestamp | timeDistance }}
             <span class="caption ml-3">{{
               new Date(tx.timestamp).toUTCString()
             }}</span>

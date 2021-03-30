@@ -1,7 +1,9 @@
 <template>
   <page-template>
     <h1 class="text-h4 mb-4">
-      <nuxt-link to="/blocks">Blocks</nuxt-link> <v-icon>mdi-chevron-right</v-icon> <span class="text-h6">#{{ block.block.header.height }}</span>
+      <nuxt-link to="/blocks">Blocks</nuxt-link>
+      <v-icon>mdi-chevron-right</v-icon>
+      <span class="text-h6">#{{ block.block.header.height }}</span>
     </h1>
     <v-card class="mb-8">
       <v-container>
@@ -54,7 +56,7 @@
             <v-icon left size="18" color="grey darken-3">
               mdi-clock-outline
             </v-icon>
-            {{ block.block.header.time | timeDistance }} ago
+            {{ block.block.header.time | timeDistance }}
             <span class="caption ml-3">{{
               new Date(block.block.header.time).toUTCString()
             }}</span>

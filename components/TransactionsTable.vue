@@ -108,33 +108,31 @@
               </nuxt-link>
             </template>
 
-            <template
-              v-else-if="
-                header.value === 'fee' &&
-                  item.fee.amount &&
-                  item.fee.amount.length > 0
-              "
-            >
-              <amount
-                v-for="(amount, i) in item.fee.amount"
-                v-bind:key="i"
-                :microAmount="
-                  item.fee.amount[i].amount ? item.fee.amount[i].amount : 0
-                "
-                :denom="item.fee.amount[i].denom"
-              />
-            </template>
-            <template
-              v-else-if="header.value === 'fee' && item.fee.amount === null"
-            >
-              <amount
-                :microAmount="0"
-                :denom="$store.getters[`app/stakeDenom`]"
-              />
-            </template>
+            <template v-else-if="header.value === 'fee'">
+              <template v-if="item.fee.length > 1">
+                <amount
+                  v-for="(amount, i) in item.fee.amount"
+                  v-bind:key="i"
+                  :microAmount="
+                    item.fee.amount[i].amount ? item.fee.amount[i].amount : 0
+                  "
+                  :denom="item.fee.amount[i].denom"
+                />
+              </template>
 
-            <template v-else>
-              {{ item[header.value] }}
+              <template v-else-if="item.fee.amount === null">
+                <amount
+                  :microAmount="0"
+                  :denom="$store.getters[`app/stakeDenom`]"
+                />
+              </template>
+
+              <template v-else-if="item.fee.length === 1">
+                <amount
+                  :microAmount="item.fee[0].amount"
+                  :denom="$store.getters[`app/stakeDenom`]"
+                />
+              </template>
             </template>
           </td>
         </tr>

@@ -17,7 +17,7 @@
       <template v-slot:item.timestamp="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <span v-on="on">{{ item.timestamp | timeDistance }} ago</span>
+            <span v-on="on">{{ item.timestamp | timeDistance }}</span>
           </template>
           <span>{{ new Date(item.timestamp) }}</span>
         </v-tooltip>
@@ -32,10 +32,10 @@ import { prettyUsd, getTimeDistance } from '@/lib/utils'
 
 export default {
   components: {
-    Proposer,
+    Proposer
   },
   filters: {
-    timeDistance: (value) => prettyUsd(getTimeDistance(value)),
+    timeDistance: value => prettyUsd(getTimeDistance(value))
   },
   props: {
     valoper: {
@@ -47,16 +47,14 @@ export default {
     return {
       headers: [
         { text: 'Height', value: 'height' },
-        { text: 'Timestamp', align: 'right', value: 'timestamp' },
+        { text: 'Timestamp', align: 'right', value: 'timestamp' }
       ],
       loading: true,
       blocks: []
     }
   },
   async created() {
-    const proposed_blocks = await this.$api.getProposedBlocks(
-      this.valoper
-    )
+    const proposed_blocks = await this.$api.getProposedBlocks(this.valoper)
     this.blocks = proposed_blocks.data
     this.loading = false
   }

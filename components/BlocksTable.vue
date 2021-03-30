@@ -30,12 +30,11 @@
               <div class="timestamp">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <span
-                      v-on="on"
-                      >{{ item[header.value] | timeDistance }}</span
-                    >
+                    <span v-on="on">{{
+                      item[header.value] | timeDistance
+                    }}</span>
                   </template>
-                  <span>{{new Date(item[header.value])}}</span>
+                  <span>{{ new Date(item[header.value]) }}</span>
                 </v-tooltip>
               </div>
             </template>
@@ -48,9 +47,11 @@
 
             <template v-else-if="header.value === 'total_fees'">
               <amount
+                v-if="item[header.value] > 0"
                 :microAmount="item[header.value]"
                 :denom="$store.getters[`app/stakeDenom`]"
               />
+              <span v-else>-</span>
             </template>
 
             <template v-else>
@@ -89,14 +90,14 @@ export default {
   },
 
   filters: {
-    timeDistance: (value) => getTimeDistance(value),
+    timeDistance: value => getTimeDistance(value)
   },
 
   computed: {
-    headers () {
+    headers() {
       return HEADERS
     }
-  },
+  }
 }
 </script>
 
