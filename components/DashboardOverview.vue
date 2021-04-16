@@ -12,11 +12,16 @@
                 {{ $store.getters['app/stakeDenom'].slice(1).toUpperCase() }}
                 PRICE</v-list-item-subtitle
               >
-              <v-list-item-title>0.00</v-list-item-title>
+              <v-list-item-title
+                >$
+                {{ prettyUsd($store.getters['app/price']) }}</v-list-item-title
+              >
             </v-list-item-content>
             <v-list-item-content>
               <v-list-item-subtitle>MARKET CAP</v-list-item-subtitle>
-              <v-list-item-title>0.00</v-list-item-title>
+              <v-list-item-title>
+                $ {{ prettyUsd($store.getters['app/market_cap']) }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item two-line icon>
@@ -103,10 +108,15 @@
 </template>
 
 <script>
+import { prettyUsd } from '@/lib/utils'
+
 export default {
   methods: {
     percentage(amt) {
       return parseFloat(amt * 100).toFixed(2)
+    },
+    prettyUsd(val) {
+      return prettyUsd(val)
     }
   },
   computed: {

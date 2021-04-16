@@ -171,7 +171,8 @@ export default {
           this.stakingBalance.commission +
           Number(available !== undefined ? available.amount : 0)
       )
-    }
+    },
+    valueAccount() {}
   }
 }
 </script>

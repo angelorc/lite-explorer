@@ -1,5 +1,5 @@
 <template>
-  <v-card tile elevation="1" :loading="loading">
+  <v-card tile elevation="1">
     <v-card-title>
       <v-icon large left>mdi-cube-send</v-icon>
       <h3 class="title">Blocks</h3>
@@ -32,19 +32,21 @@
                 <span class="caption">Fees</span>
               </span>
             </div>
-          </v-col>
-          <v-col align="right" class="body-2 grey--text text--darken-3">
-            <div>{{ block.timestamp | timeDistance }}</div>
-            <div
-              style="
+            <div class="mt-2 body-2 grey--text text--darken-3">
+              Proposer
+              <proposer
+                style="
                 width: 200px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
               "
-            >
-              <proposer :address="block.proposer_address"></proposer>
+                :address="block.proposer_address"
+              ></proposer>
             </div>
+          </v-col>
+          <v-col align="right" class="body-2 grey--text text--darken-3">
+            <div>{{ block.timestamp | timeDistance }}</div>
           </v-col>
         </v-row>
       </template>
@@ -66,8 +68,7 @@ export default {
   },
   data() {
     return {
-      blocks: [],
-      loading: true
+      blocks: []
     }
   },
   created() {
@@ -75,10 +76,8 @@ export default {
   },
   methods: {
     async getLatestBlocks() {
-      this.loading = true
       const blocks = await this.$api.getLatestBlocks()
       this.blocks = blocks.docs
-      this.loading = false
     }
   },
   computed: {

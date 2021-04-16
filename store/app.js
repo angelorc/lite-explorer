@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js'
+
 export const state = () => ({
   connected: false,
   last_block: 0,
@@ -9,7 +11,9 @@ export const state = () => ({
     active: 0,
     total: 0
   },
-  stakeDenom: 'ubtsg'
+  stakeDenom: 'ubtsg',
+  price: 0,
+  eth_supply: 11447149.845485103
 })
 
 export const getters = {
@@ -36,6 +40,13 @@ export const getters = {
   },
   stakeDenom: state => {
     return state.stakeDenom
+  },
+  price: state => {
+    return new BigNumber(state.price).toFixed(4)
+  },
+  market_cap: (state, getters) => {
+    const total_supply = new BigNumber(getters.total_supply).times(0.000001)
+    return new BigNumber(state.price).multipliedBy(new BigNumber(state.eth_supply).plus(total_supply)).toFixed(0)
   }
 }
 
@@ -60,6 +71,9 @@ export const mutations = {
   },
   setInflation: (state, inflation) => {
     state.inflation = inflation
+  },
+  setPrice: (state, price) => {
+    state.price = price
   }
 }
 
@@ -83,14 +97,12 @@ export const actions = {
         commit('setInflation', inflation.result)
       }
     )
+  },
+  async getPrice({ commit }) {
+    const price = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=bitsong&vs_currencies=usd`).then(response =>
+      response.json()
+    ).then(response => response.bitsong.usd)
 
-    // this.$tm.subscribe(
-    //   {
-    //     query: `tm.event = 'Vote'`,
-    //   },
-    //   async (response) => {
-    //     console.log(response)
-    //   }
-    // )
+    commit('setPrice', price)
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <v-card tile elevation="1" :loading="loading">
+  <v-card tile elevation="1">
     <v-card-title>
       <v-icon large left>mdi-bank-transfer</v-icon>
       <h3 class="title">Transactions</h3>
@@ -22,7 +22,7 @@
               }}</nuxt-link>
             </div>
           </v-col>
-          <v-col cols="9" class="pb-0 body-2 grey--text text--darken-3">
+          <v-col cols="9" class="pb-0 pt-1 body-2 grey--text text--darken-3">
             From
             <nuxt-link :to="`/account/${tx.signatures[0].address}`">{{
               tx.signatures[0].address | hash
@@ -51,7 +51,7 @@
             </div>
           </v-col>
 
-          <v-col class="body-2 grey--text text--darken-3" cols="12">
+          <v-col class="body-2 grey--text text--darken-3 pt-0" cols="12">
             <v-chip outlined small>{{
               tx.messages[0].type | convertMessageType
             }}</v-chip>
@@ -92,8 +92,7 @@ export default {
   },
   data() {
     return {
-      txs: [],
-      loading: true
+      txs: []
     }
   },
   created() {
@@ -101,10 +100,8 @@ export default {
   },
   methods: {
     async getLatestTxs() {
-      this.loading = true
       const txs = await this.$api.getLatestTxs()
       this.txs = txs.docs
-      this.loading = false
     }
   },
   computed: {
