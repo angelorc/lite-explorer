@@ -12,7 +12,7 @@ export const getters = {
       let rank = 1
 
       return [...state.validators].sort((a, b) => {
-        return b.tokens - a.tokens
+        return Number(b.tokens) - Number(a.tokens)
       }).map(val => {
         return {
           ...val,
@@ -49,8 +49,8 @@ export const mutations = {
 export const actions = {
   async getAll({ commit }) {
     const bonded = await this.$btsg.getValidators()
-    const unbonded = await this.$btsg.getValidators('unbonded')
-    const unbonding = await this.$btsg.getValidators('unbonding')
+    const unbonded = await this.$btsg.getValidators('BOND_STATUS_UNBONDED')
+    const unbonding = await this.$btsg.getValidators('BOND_STATUS_UNBONDING')
 
     const validators = [
       ...bonded.result,

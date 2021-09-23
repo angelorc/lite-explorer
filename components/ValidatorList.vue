@@ -58,7 +58,7 @@
                     <v-avatar
                       v-on="on"
                       :color="
-                        validator.status === 2
+                        validator.status === 3
                           ? `green darken-1`
                           : `red darken-1`
                       "
@@ -66,7 +66,7 @@
                       class="ml-2"
                     ></v-avatar>
                   </template>
-                  <span v-if="validator.status === 2">Status: Active</span>
+                  <span v-if="validator.status === 3">Status: Active</span>
                   <span v-else>Status: Inactive</span>
                 </v-tooltip>
               </div>

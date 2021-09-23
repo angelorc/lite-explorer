@@ -88,7 +88,7 @@ export const actions = {
         commit('setHeaders', response.data)
 
         const supply = await this.$btsg.getTotalSupply()
-        commit('setTotalSupply', supply.result[0].amount)
+        commit('setTotalSupply', supply.amount.amount)
 
         const cp = await this.$btsg.getCommunityPool()
         commit('setCommunityPool', cp.result[0].amount)

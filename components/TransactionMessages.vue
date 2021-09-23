@@ -1,10 +1,10 @@
 <template>
   <v-card>
     <template v-for="(msg, i) in msgs">
-      <v-card-title :key="i">{{ msg.type | convertMessageType }}</v-card-title>
-      <template v-for="([key, value], i) in Object.entries(msg.value)">
+      <v-card-title :key="i">{{ msg['@type'] }}</v-card-title>
+      <template v-for="([key, value], i) in Object.entries(msg)">
         <v-container class="py-0" :key="`msg${i}`">
-          <v-row>
+          <v-row v-if="key !== '@type'">
             <v-col
               cols="12"
               md="2"
@@ -19,14 +19,20 @@
               :class="{ 'pt-0': $vuetify.breakpoint.smAndDown }"
             >
               <template
-                v-if="value !== null && value.length > 10 && value.startsWith('bitsong1')"
+                v-if="
+                  value !== null &&
+                    value.length > 10 &&
+                    value.startsWith('bitsong1')
+                "
               >
                 <nuxt-link :to="`/account/${value}`">{{ value }}</nuxt-link>
               </template>
 
               <template
                 v-else-if="
-                  value !== null && value.length > 10 && value.startsWith('bitsongvaloper')
+                  value !== null &&
+                    value.length > 10 &&
+                    value.startsWith('bitsongvaloper')
                 "
               >
                 <nuxt-link :to="`/staking/${value}`">{{ value }}</nuxt-link>
@@ -79,12 +85,6 @@ export default {
     Amount
   },
   filters: {
-    convertMessageType: value => {
-      return value
-        .replace('cosmos-sdk/Msg', '')
-        .replace(/([A-Z])/g, ' $1')
-        .trim()
-    },
     convertKey: value => {
       return upperCaseFirstLetter(value.replace('_', ' ').trim())
     }

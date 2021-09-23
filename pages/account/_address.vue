@@ -89,17 +89,7 @@ export default {
   },
   async asyncData({ app, params }) {
     const account = await app.$btsg.getAccount(params.address)
-
-    // if nothing is available add default coin
-    if (!account.value.coins.length) {
-      account.value.coins = [
-        {
-          denom: process.env.MICROSTAKEDENOM,
-          amount: 0
-        }
-      ]
-    }
-
+    const balance = await app.$btsg.getBalanceByDenom(params.address, 'ubtsg')
     const delegations = await app.$btsg.getDelegations(params.address)
     const txs = await app.$api.getTransactions(params.address, null, 0, 10)
     const unbondings = await app.$btsg.getUnbondingDelegations(params.address)
@@ -107,12 +97,13 @@ export default {
     const commission = await app.$api.getValidatorDelegatorReward(
       params.address
     )
+    console.log([balance])
 
     return {
       address: params.address,
       stakeDenom: process.env.STAKEDENOM,
       account: account.value,
-      balances: account.value.coins,
+      balances: [balance],
       delegations: delegations.sort(
         (d1, d2) => d2.balance.amount - d1.balance.amount
       ),
@@ -120,8 +111,8 @@ export default {
       unbondings,
       rewards: rewards.total,
       commission:
-        commission !== undefined && commission.result.val_commission !== null
-          ? commission.result.val_commission[0].amount
+        commission !== undefined && commission.commission.length !== null
+          ? commission.commission[0].amount
           : 0
     }
   },

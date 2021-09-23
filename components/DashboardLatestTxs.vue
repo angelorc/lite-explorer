@@ -25,7 +25,7 @@
           <v-col cols="9" class="pb-0 pt-1 body-2 grey--text text--darken-3">
             From
             <nuxt-link :to="`/account/${tx.signatures[0].address}`">{{
-              tx.signatures[0].address | hash
+              tx.signers[0] | hash
             }}</nuxt-link>
           </v-col>
           <v-col
@@ -53,7 +53,7 @@
 
           <v-col class="body-2 grey--text text--darken-3 pt-0" cols="12">
             <v-chip outlined small>{{
-              tx.messages[0].type | convertMessageType
+              tx.messages[0]['@type'] | convertMessageType
             }}</v-chip>
             <v-chip outlined small v-if="tx.messages.length - 1"
               >+{{ tx.messages.length - 1 }}</v-chip
@@ -76,19 +76,15 @@ import {
   prettyRound,
   shortFilter,
   getTimeDistance,
-  sleep
+  sleep,
+  convertMessageType
 } from '@/lib/utils'
 
 export default {
   filters: {
     hash: value => shortFilter(value, 12),
     timeDistance: value => prettyUsd(getTimeDistance(value)),
-    convertMessageType: value => {
-      return value
-        .replace('cosmos-sdk/Msg', '')
-        .replace(/([A-Z])/g, ' $1')
-        .trim()
-    }
+    convertMessageType: value => convertMessageType(value)
   },
   data() {
     return {

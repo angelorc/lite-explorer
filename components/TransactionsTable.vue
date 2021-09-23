@@ -75,7 +75,7 @@
 
             <template v-else-if="header.value === 'messages'">
               <v-chip outlined small>{{
-                item.messages[0].type | convertMessageType
+                item.messages[0]['@type'] | convertMessageType
               }}</v-chip>
               <v-chip outlined small v-if="item.messages.length - 1"
                 >+{{ item.messages.length - 1 }}</v-chip
@@ -142,7 +142,7 @@
 </template>
 
 <script>
-import { getTimeDistance } from '~/lib/utils'
+import { getTimeDistance, convertMessageType } from '~/lib/utils'
 
 import AppSheet from '@/components/app/Sheet'
 
@@ -170,12 +170,7 @@ export default {
 
   filters: {
     timeDistance: value => getTimeDistance(value),
-    convertMessageType: value => {
-      return value
-        .replace('cosmos-sdk/Msg', '')
-        .replace(/([A-Z])/g, ' $1')
-        .trim()
-    }
+    convertMessageType: value => convertMessageType(value)
   },
 
   computed: {
