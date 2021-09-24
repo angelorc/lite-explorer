@@ -12,8 +12,8 @@
       height="290"
     >
       <template v-slot:item.delegator_address="{ item }">
-        <nuxt-link :to="`/account/${item.delegator_address}`">{{
-          item.delegator_address
+        <nuxt-link :to="`/account/${item.delegation.delegator_address}`">{{
+          item.delegation.delegator_address
         }}</nuxt-link>
       </template>
       <template v-slot:item.balance="{ item }">
@@ -37,7 +37,7 @@ export default {
     }
   },
   components: {
-    Amount,
+    Amount
   },
   data() {
     return {
@@ -45,18 +45,16 @@ export default {
         {
           text: 'Delegator Address',
           value: 'delegator_address',
-          sortable: false,
+          sortable: false
         },
-        { text: 'Amount', value: 'balance', align: 'right', sortable: false },
+        { text: 'Amount', value: 'balance', align: 'right', sortable: false }
       ],
       loading: true,
       delegations: []
     }
   },
   async created() {
-    const delegations = await this.$btsg.getValidatorDelegations(
-      this.valoper
-    )
+    const delegations = await this.$btsg.getValidatorDelegations(this.valoper)
     this.delegations = delegations.result
     this.loading = false
   }

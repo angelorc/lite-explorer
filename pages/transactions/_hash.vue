@@ -79,6 +79,24 @@
             md="2"
             :class="{ 'py-0': $vuetify.breakpoint.smAndDown }"
             class="grey--text text--darken-2"
+            >Fee</v-col
+          >
+          <v-col
+            cols="12"
+            md="10"
+            :class="{ 'pt-0': $vuetify.breakpoint.smAndDown }"
+          >
+            <amount
+              v-for="(fee, i) in tx.fee.amount"
+              v-bind:key="i"
+              :microAmount="fee.amount"
+              :denom="fee.denom"
+          /></v-col>
+          <v-col
+            cols="12"
+            md="2"
+            :class="{ 'py-0': $vuetify.breakpoint.smAndDown }"
+            class="grey--text text--darken-2"
             >Gas (Used/Wanted)</v-col
           >
           <v-col
@@ -92,18 +110,32 @@
             md="2"
             :class="{ 'py-0': $vuetify.breakpoint.smAndDown }"
             class="grey--text text--darken-2"
-            >Signature</v-col
+            >Signers</v-col
           >
           <v-col
             cols="12"
             md="10"
             :class="{ 'pt-0': $vuetify.breakpoint.smAndDown }"
           >
-            <template v-for="(sig, i) in tx.signatures">
-              <nuxt-link :key="i" :to="`/account/${sig.address}`">{{
-                sig.address
-              }}</nuxt-link
+            <template v-for="(sig, i) in tx.signers">
+              <nuxt-link :key="i" :to="`/account/${sig}`">{{ sig }}</nuxt-link
               ><br />
+            </template>
+          </v-col>
+          <v-col
+            cols="12"
+            md="2"
+            :class="{ 'py-0': $vuetify.breakpoint.smAndDown }"
+            class="grey--text text--darken-2"
+            >Signatures</v-col
+          >
+          <v-col
+            cols="12"
+            md="10"
+            :class="{ 'pt-0': $vuetify.breakpoint.smAndDown }"
+          >
+            <template v-for="signature in tx.signatures">
+              {{ signature }}<br />
             </template>
           </v-col>
           <v-col

@@ -10,11 +10,16 @@
             />
           </v-list-item-title>
           <v-list-item-subtitle>
-            <proposer :valoper="delegation.validator_address"></proposer>
+            <proposer
+              :valoper="delegation.delegation.validator_address"
+            ></proposer>
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn icon :to="`/staking/${delegation.validator_address}`">
+          <v-btn
+            icon
+            :to="`/staking/${delegation.delegation.validator_address}`"
+          >
             <v-icon color="primary">mdi-chevron-right</v-icon>
           </v-btn>
         </v-list-item-action>

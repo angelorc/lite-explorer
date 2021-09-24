@@ -53,21 +53,24 @@
               </div>
             </template>
 
-            <template v-else-if="header.value === 'signatures'">
+            <template v-else-if="header.value === 'signers'">
               <div class="text-truncate address text-mono">
-                <nuxt-link :to="`/account/${item[header.value][0].address}`">{{
-                  item[header.value][0].address
+                <nuxt-link :to="`/account/${item[header.value][0]}`">{{
+                  item[header.value][0]
                 }}</nuxt-link>
               </div>
             </template>
 
             <template v-else-if="header.value === 'to'">
               <div class="text-truncate address text-mono">
-                <span v-if="item.messages[0].type === 'cosmos-sdk/MsgSend'">
-                  <nuxt-link
-                    :to="`/account/${item.messages[0].value.to_address}`"
-                    >{{ item.messages[0].value.to_address }}</nuxt-link
-                  >
+                <span
+                  v-if="
+                    item.messages[0]['@type'] === '/cosmos.bank.v1beta1.MsgSend'
+                  "
+                >
+                  <nuxt-link :to="`/account/${item.messages[0].to_address}`">{{
+                    item.messages[0].to_address
+                  }}</nuxt-link>
                 </span>
                 <span v-else>-</span>
               </div>
@@ -109,7 +112,7 @@
             </template>
 
             <template v-else-if="header.value === 'fee'">
-              <template v-if="item.fee.length > 1">
+              <template v-if="item.fee.amount.length > 1">
                 <amount
                   v-for="(amount, i) in item.fee.amount"
                   v-bind:key="i"
@@ -127,9 +130,9 @@
                 />
               </template>
 
-              <template v-else-if="item.fee.length === 1">
+              <template v-else-if="item.fee.amount.length === 1">
                 <amount
-                  :microAmount="item.fee[0].amount"
+                  :microAmount="item.fee.amount[0].amount"
                   :denom="$store.getters[`app/stakeDenom`]"
                 />
               </template>
@@ -150,7 +153,7 @@ const HEADERS = [
   { text: 'Tx Hash', value: 'tx_hash' },
   { text: 'Height', value: 'height' },
   { text: 'Age', value: 'timestamp' },
-  { text: 'From', value: 'signatures' },
+  { text: 'From', value: 'signers' },
   { text: 'To', value: 'to' },
   { text: 'Msgs', value: 'messages' },
   { text: 'Amount', value: 'amount' },

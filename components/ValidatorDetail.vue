@@ -14,7 +14,7 @@
                 {{ validator.description.moniker }}
               </h2>
               <v-chip
-                v-if="validator.status === 2"
+                v-if="validator.status === 3"
                 style="margin-top: -5px"
                 class="ml-2 font-weight-medium"
                 color="green"
@@ -24,7 +24,7 @@
                 Active
               </v-chip>
               <v-chip
-                v-if="validator.status !== 2"
+                v-if="validator.status !== 3"
                 style="margin-top: -5px"
                 class="ml-2 font-weight-medium"
                 color="red"

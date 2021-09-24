@@ -11,11 +11,14 @@
           ></validator-detail>
         </v-col>
       </v-row>
+      <!--
+        Temporary disable validator-uptime
       <v-row>
         <v-col cols="12">
           <validator-uptime :valoper="validator.operator_address"></validator-uptime>
         </v-col>
       </v-row>
+      -->
       <v-row>
         <v-col cols="12" md="6">
           <validator-proposed-blocks

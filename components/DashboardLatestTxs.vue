@@ -24,7 +24,7 @@
           </v-col>
           <v-col cols="9" class="pb-0 pt-1 body-2 grey--text text--darken-3">
             From
-            <nuxt-link :to="`/account/${tx.signatures[0].address}`">{{
+            <nuxt-link :to="`/account/${tx.signers[0]}`">{{
               tx.signers[0] | hash
             }}</nuxt-link>
           </v-col>
